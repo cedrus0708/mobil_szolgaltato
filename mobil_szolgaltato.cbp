@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DMEMTRACE" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -32,7 +33,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="csomag.cpp" />
+		<Unit filename="csomag.h" />
+		<Unit filename="file.cpp" />
+		<Unit filename="file.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="memtrace.cpp" />
+		<Unit filename="memtrace.h" />
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
+		<Unit filename="string.cpp" />
+		<Unit filename="string.h" />
+		<Unit filename="ugyfel.cpp" />
+		<Unit filename="ugyfel.h" />
+		<Unit filename="vector.cpp" />
+		<Unit filename="vector.hpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

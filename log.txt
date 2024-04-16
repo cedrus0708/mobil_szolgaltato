@@ -1,0 +1,7 @@
+main
+string.h + string.cpp
+vector.h(pp) + vector.cpp - iterátor is <- "Generikus Tároló"
+ugyfel.h + ugyfel.cpp
+csomag.h + csomag.cpp
+file.h + file.cpp
+menu.h + menu.cpp
