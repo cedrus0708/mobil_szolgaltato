@@ -109,6 +109,7 @@ std::istream& operator>>(std::istream& is, string& s0);
 /// @return új string, ami tartalmazza a karaktert és a stringet egymás után
 inline string operator+(char ch, const string& str) { return string(ch) + str; }
 
+int stoi(const string& str);
 
 
 #endif // _STRING

@@ -6,40 +6,79 @@
 #include "ugyfel.h"
 #include "vector.hpp"
 
-using std::cout;
-using std::cin;
 using std::endl;
 
 class Menu{
+    std::ostream& os;
+    std::istream& is;
+
     bool interfacing;
 
     vector<Ugyfel*> ugyfelek;
+// --------------------
+
+    string get_input(string input_name){ // validate input... ,validation type...
+        os << '\t' << input_name << ": ";
+        string input;
+        is >> input;
+        return input;
+    };
+
+    void kilep(){
+        os << "Kilépés a programból..." << endl;
+        interfacing = false;
+    }
+
+    void uj_ugyfel(){
+        os << "Uj ugyfel letrehozasa." << endl << "Ugyfel adatai:" << endl;
+        string telefonszam = get_input("telefonszam");
+        string nev = get_input("nev");
+        string cim = get_input("cim");
+        // .. more validation
+        // check if ugyfel already exists
+        // convert to number, handle if not number
+        //ugyfelek.push_back(new Ugyfel( static_cast<int>(telefonszam), nev, cim, new AlapCsomag("alap") ));
+        ugyfelek.push_back(new Ugyfel( stoi(telefonszam), nev, cim, new AlapCsomag("alap") ));
+        os << "Ugyfel letrehozva." << endl;
+    }
+
+    void ugyfelek_listazasa(){
+        int ugyfelek_szama = ugyfelek.size();
+        if(ugyfelek.isEmpty()) { os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
+        os << "Ugyfelek a rendszerben:" << endl;
+        for(int i = 0; i < ugyfelek_szama; ++i){
+            os << ugyfelek[i] << endl;
+        }
+    }
 
 public:
-    Menu() : interfacing(true) {};
+    Menu(std::ostream& os, std::istream& is) : os(os), is(is), interfacing(true) {};
 
     void fomenu(){ // main_menu
         while(interfacing){
-            cout << "0. Kiepes a programbol" << endl
+            os << endl << "Valassz az alabbi lehetosegek kozul" << endl;
+            os << "0. Kiepes a programbol" << endl
                 << "1. Ugyfel felvetele" << endl
                 << "2. Ugyfelek listazasa" << endl
                 << "3. Ugyfel torlese" << endl
                 << "4. Ugyfelek fajlba irasa" << endl
                 << "5. Ugyfelek betoltese fajlbol" << endl
                 << "6. Szamlazas" << endl;
-            string valasztas;
-            cin >> valasztas;
+
+            string valasztas = get_input("Valasztas");
+
             valasztas_kezelo(valasztas);
         }
     }
 
     void valasztas_kezelo(const string& valasztas){
-        if     (valasztas == "0") interfacing = false;   // 0. kilep
+        if     (valasztas == "0") kilep();   // 0. kilep
         else if(valasztas == "1") uj_ugyfel();           // 1. ugyfel felvetele
-        else cout << "ertelmezhetetlen";
+        else if(valasztas == "2") ugyfelek_listazasa();
+        else os << "ertelmezhetetlen";
     }
 
-    void uj_ugyfel(){}
+
 
 
 };

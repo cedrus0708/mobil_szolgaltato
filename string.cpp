@@ -112,3 +112,7 @@ int string::countDigits(int number) {
         }
         return count;
     }
+
+int stoi(const string& str){
+    return sscanf("%d", str.c_str());
+}
