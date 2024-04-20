@@ -70,7 +70,7 @@ const char& string::operator[](unsigned int idx) const {
     return pData[idx];
 }
 
-bool string::operator==(const string& cmp){
+bool string::operator==(const string& cmp) const {
     if(cmp.length != length) return false;
     return strcmp(pData, cmp.pData) == 0;
 }

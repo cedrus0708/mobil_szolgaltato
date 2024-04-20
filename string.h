@@ -85,7 +85,7 @@ public:
     ///         Indexelési hiba esetén const char* kivételt dob.
     const char& operator[](unsigned int idx) const;
 
-    bool operator==(const string& cmp);
+    bool operator==(const string& cmp) const;
 
     inline bool isEmpty() const { return length == 0; };
 };

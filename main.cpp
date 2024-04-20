@@ -2,14 +2,31 @@
 
 #include "memtrace.h"
 
-/* M…G NEM M€K÷DIK NEGAGTÕV SZ¡MOKRA! */
-#include "string.h"
+/* M√âG NEM M≈∞K√ñDIK NEGAGT√çV SZ√ÅMOKRA! */
+//#include "string.h"
+
+/*HIBAKEZEL√âS*/
+
+//#include "ugyfel.h"
+#include "menu.h" //<-- interface
+
+//#include <iostream>
+//#include <fstream>
 
 using std::cout;
 using std::endl;
 
 int main()
 {
+
+    Menu menu;
+
+    menu.fomenu();
+
+    /*std::ifstream myfile("ugyfelek.txt");
+    Ugyfel u;
+    myfile >> u;
+    cout << u.getTel();*/
 
     return 0;
 }
