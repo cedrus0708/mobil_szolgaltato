@@ -88,6 +88,59 @@ public:
     bool operator==(const string& cmp) const;
 
     inline bool isEmpty() const { return length == 0; };
+
+
+    bool includes(char c) const {
+        for(size_t i = 0; i < length; ++i)
+            if(pData[i] == c) return true;
+        return false;
+    }
+
+    // visszadja azt az első indexet, amely a string elejétől nézve nem tartalmazza a paraméterül kapott string egyik elemét.
+    // (-> a visszadott index már nem tartalmazza)
+    size_t find_first_not_of(const string& characters) const {
+        size_t i = 0;
+        while(characters.includes(pData[i]) && i < length ) i++;
+        return i;
+    }
+    size_t find_last_not_of(const string& characters) const {
+        size_t i = size() - 1;
+        while(characters.includes(pData[i]) && i > 0 ) i--;
+        return i;
+    }
+
+    string& erase(size_t start){
+        return erase(start, size() - 1);
+    }
+
+    // const char* tipusu kivelel
+    // elhagyja a megadott index alatti és feletti részeit a stringnek. (maguk az indexek maradnak)
+    string& erase(size_t start, size_t stop){
+        if(start < 0 || start > stop || stop >= size()) throw "kerem szepen..";
+
+        size_t new_length = stop - start + 1;
+        char* new_pData = new char[new_length + 1];
+        strncpy(new_pData, pData + start, new_length);
+        new_pData[new_length] = '\0';
+        delete[] pData;
+        pData = new_pData;
+        length = new_length;
+        return *this;
+    }
+
+    string& trim(){
+        string white_spaces = " \f\n\r\t\v";
+
+        // trim right
+        size_t pos = find_last_not_of( white_spaces );
+        erase( pos + 1 );
+
+        // trim left
+        pos = find_first_not_of( white_spaces );
+        erase( 0, pos );
+
+        return *this;
+    }
 };
 
 /// Globális függvények:
@@ -95,13 +148,13 @@ public:
 /// @param os - ostream típusú objektum
 /// @param s0 - string, amit kiírunk
 /// @return os
-std::ostream& operator<<(std::ostream& os, const string& s0);
+std::ostream& operator<<(std::ostream& os, const string& s);
 
 /// Beolvas az istream-rõl egy szót egy string-be.
 /// @param is - istream típusú objektum
 /// @param s0 - string, amibe beolvas
 /// @return is
-std::istream& operator>>(std::istream& is, string& s0);
+std::istream& operator>>(std::istream& is, string& s);
 
 /// Karakterhez stringet fûz
 /// @param ch - karakter

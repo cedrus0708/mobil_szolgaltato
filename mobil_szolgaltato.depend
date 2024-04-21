@@ -1,22 +1,22 @@
 # depslib dependency file v1.0
-1713465466 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
+1713718356 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
 	<iostream>
 	"memtrace.h"
 	"menu.h"
 
-1713464548 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
+1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
 	"csomag.h"
 
-1713464438 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.h
+1713706010 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.h
 	<iostream>
 	"string.h"
 
-1713302959 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\file.cpp
+1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\file.cpp
 	"file.h"
 
-1713460838 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\file.h
+1713704837 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\file.h
 
-1712940585 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\memtrace.cpp
+1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\memtrace.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -24,7 +24,7 @@
 	<ctype.h>
 	"memtrace.h"
 
-1712940573 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\memtrace.h
+1713704837 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\memtrace.h
 	<new>
 	<cstdio>
 	<stdlib.h>
@@ -46,34 +46,34 @@
 	<iterator>
 	<regex>
 
-1713302983 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.cpp
+1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.cpp
 	"menu.h"
 
-1713466040 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.h
+1713707810 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.h
 	<iostream>
 	"ugyfel.h"
 	"vector.hpp"
 
-1713466047 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
+1713713662 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
 	<iostream>
 	<cstring>
 	"memtrace.h"
 	"string.h"
 
-1713464260 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.cpp
+1713707756 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.cpp
 	"ugyfel.h"
 
-1713462083 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.h
+1713705997 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.h
 	"string.h"
 	"csomag.h"
 
-1713302767 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\vector.cpp
+1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\vector.cpp
 
-1713466028 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.h
+1713718396 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.h
 	<iostream>
 	"memtrace.h"
 
-1713464757 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\vector.hpp
+1713704837 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\vector.hpp
 
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.cpp
 	"csomag.h"

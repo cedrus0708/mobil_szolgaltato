@@ -77,17 +77,24 @@ bool string::operator==(const string& cmp) const {
 
 
 
-std::ostream& operator<<(std::ostream& os, const string& s0){
-    os << s0.c_str();
+std::ostream& operator<<(std::ostream& os, const string& s){
+    os << s.c_str();
     return os;
 }
 
-/// Beolvas az istream-rõl egy szót egy string-be.
-/// @param is - istream típusú objektum
-/// @param s0 - string, amibe beolvas
-/// @return is
-std::istream& operator>>(std::istream& is, string& s0){
-    unsigned char ch;
+
+std::istream& operator>>(std::istream& is, string& s){
+
+    char c;
+    s = string("");
+
+    while(is.get(c)) {
+        if(c != '\n') s = s + c;
+        else break;
+    }
+
+    return is;
+    /*unsigned char ch;
     s0 = string("");
 	std::ios_base::fmtflags fl = is.flags();
 	is.setf(std::ios_base::skipws);
@@ -100,8 +107,8 @@ std::istream& operator>>(std::istream& is, string& s0){
             s0 = s0 + ch;
         }
     }
-	is.setf(fl);
-    return is;
+	is.setf(fl);*/
+
 }
 
 int string::countDigits(int number) {
@@ -114,5 +121,9 @@ int string::countDigits(int number) {
     }
 
 int stoi(const string& str){
-    return sscanf("%d", str.c_str());
+    std::cout << "KONVERTALAS "
+    << str.c_str();
+    int szam = 0;
+    sscanf(str.c_str(),"%d", &szam);
+    return szam;
 }

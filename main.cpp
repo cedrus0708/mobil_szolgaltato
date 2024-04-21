@@ -19,10 +19,12 @@ using std::endl;
 
 int main()
 {
+    /*Menu menu(cout, cin);
 
-    Menu menu(cout, cin);
+    menu.fomenu();*/
 
-    menu.fomenu();
+    string a = "   a  ";
+    cout << a.trim();
 
     /*std::ifstream myfile("ugyfelek.txt");
     Ugyfel u;

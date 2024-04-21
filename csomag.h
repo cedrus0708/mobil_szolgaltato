@@ -8,6 +8,7 @@
 const string MobiNetNev = "mobinet";
 const string SMSMaxNev = "smsmax";*/
 
+/*COPY CONSTRUCTOR, DESTRUCTOR ?? */
 class Csomag {
 private:
     const string nev;
