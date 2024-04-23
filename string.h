@@ -133,14 +133,15 @@ public:
 
         // trim right
         size_t pos = find_last_not_of( white_spaces );
-        erase( pos + 1 );
+        erase( 0, pos );
 
         // trim left
         pos = find_first_not_of( white_spaces );
-        erase( 0, pos );
+        erase( pos );
 
         return *this;
     }
+
 };
 
 /// Globális függvények:
