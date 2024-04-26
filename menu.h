@@ -17,11 +17,13 @@ class Menu{
     vector<Ugyfel*> ugyfelek;
 // --------------------
 
-    template<typename T>
-    T get_input(string input_name, string input_start_text = ""){ // validate input... ,validation type...
+    //template<typename T>
+    string get_input(string input_name, string input_start_text = ""){ // validate input... ,validation type...
         os << '\t' << input_name << ": " << input_start_text;
-        T input;
-        is >> input;
+        string input;
+        is >> std::skipws >> input;
+        //std::cout << "   " <<  input;
+        //is >> input;
         return input;
     };
 
@@ -32,9 +34,9 @@ class Menu{
 
     void uj_ugyfel(){
         os << "Uj ugyfel letrehozasa." << endl << "Ugyfel adatai:" << endl;
-        int telefonszam = get_input<int>("telefonszam", "+36");
-        string nev = get_input<string>("nev").trim();
-        string cim = get_input<string>("cim").trim();
+        int telefonszam = stoi(get_input("telefonszam", "+36"));
+        string nev = get_input("nev").trim();
+        string cim = get_input("cim").trim();
         // .. more validation
         // check if ugyfel already exists
         // convert to number, handle if not number
@@ -70,7 +72,7 @@ public:
                 << "5. Ugyfelek betoltese fajlbol" << endl
                 << "6. Szamlazas" << endl;
 
-            string valasztas = get_input<string>("Valasztas");
+            string valasztas = get_input("Valasztas");
 
             valasztas_kezelo(valasztas);
         }
