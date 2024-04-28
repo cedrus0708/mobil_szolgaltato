@@ -111,7 +111,7 @@ std::istream& operator>>(std::istream& is, string& s){
 
 }
 
-int string::countDigits(int number) {
+int countDigits(int number) {
         int count = 0;
         while (number != 0) {
             number /= 10;
@@ -121,9 +121,9 @@ int string::countDigits(int number) {
     }
 
 int stoi(const string& str){
-    std::cout << "KONVERTALAS "
-    << str.c_str();
+    string str_clone = str;
+    str_clone.remove_all(" \f\n\r\t\v");
     int szam = 0;
-    sscanf(str.c_str(),"%d", &szam);
+    sscanf(str_clone.c_str(),"%d", &szam);
     return szam;
 }

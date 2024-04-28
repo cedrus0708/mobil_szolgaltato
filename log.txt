@@ -1,3 +1,6 @@
+Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
+pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
+
 main
 string.h + string.cpp
 vector.h(pp) + vector.cpp - iterátor is <- "Generikus Tároló"

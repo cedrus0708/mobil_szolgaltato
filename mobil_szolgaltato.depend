@@ -78,11 +78,11 @@
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.cpp
 	"csomag.h"
 
-1713594402 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.h
+1714141851 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.h
 	<iostream>
 	"string.h"
 
-1713634132 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.h
+1714220357 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.h
 	<iostream>
 	"memtrace.h"
 
@@ -113,17 +113,17 @@
 
 1713594402 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\file.h
 
-1713633310 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\main.cpp
+1714220372 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\main.cpp
 	<iostream>
 	"memtrace.h"
 	"menu.h"
 
-1713634597 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\menu.h
+1714220519 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\menu.h
 	<iostream>
 	"ugyfel.h"
 	"vector.hpp"
 
-1713594402 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.h
+1714141851 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.h
 	"string.h"
 	"csomag.h"
 
@@ -140,13 +140,13 @@
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\menu.cpp
 	"menu.h"
 
-1713634126 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.cpp
+1714218611 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.cpp
 	<iostream>
 	<cstring>
 	"memtrace.h"
 	"string.h"
 
-1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.cpp
+1714141851 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.cpp
 	"ugyfel.h"
 
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\vector.cpp

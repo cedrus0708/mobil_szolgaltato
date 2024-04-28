@@ -13,12 +13,26 @@
 //#include <iostream>
 //#include <fstream>
 
+
+/**
+A string erase nem jó.
+Csak egy egyik index lehet olya, (első) hogy tartalmazza az új string.
+A végénél egyel túl kell mutatni.
+*/
+
 using std::cout;
 using std::cin;
 using std::endl;
 
 int main()
 {
+
+    /*string a = "  asoma  \t \t";
+    a.trim();
+    //cout << a.find_last_not_of(" \t");
+
+    //a.trim();
+    cout<< "a:" << a<<a.size() <<".";*/
 
     /*
     jelenleg az a gond, hogy hogyan olvassam be a telefonszámot integer-be.

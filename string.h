@@ -16,12 +16,11 @@
  * length: hossz. A hosszba nem számít bele a lezáró nulla.
  */
 
+int countDigits(int number);
 
 class string {
     size_t length;  ///< hossz lezáró nulla nélkül
     char* pData;    ///< pointer az adatra
-
-    int countDigits(int number); ///< integer konstruktorhoz
 
 public:
 
@@ -97,28 +96,33 @@ public:
     }
 
     // visszadja azt az első indexet, amely a string elejétől nézve nem tartalmazza a paraméterül kapott string egyik elemét.
-    // (-> a visszadott index már nem tartalmazza)
+    // a visszaadott index még pont tartalmazza.
     size_t find_first_not_of(const string& characters) const {
         size_t i = 0;
-        while(characters.includes(pData[i]) && i < length ) i++;
+        if(length)
+            while(characters.includes(pData[i]) && i < length ) i++;
         return i;
     }
     size_t find_last_not_of(const string& characters) const {
         size_t i = size() - 1;
-        while(characters.includes(pData[i]) && i > 0 ) i--;
+        if(length)
+            while(characters.includes(pData[i]) && i > 0 ) i--;
         return i;
     }
 
     string& erase(size_t start){
-        return erase(start, size() - 1);
+        return erase(start, size());
     }
 
     // const char* tipusu kivelel
     // elhagyja a megadott index alatti és feletti részeit a stringnek. (maguk az indexek maradnak)
+    // elhagyja a megadott index alatti és feletti részeit a stringnek.
+    // Az alsó index = start nem kerül elhagyásra, de a felső index = stop igen.
+    // új string: [sart, stop)
     string& erase(size_t start, size_t stop){
-        if(start < 0 || start > stop || stop >= size()) throw "kerem szepen..";
+        if(start < 0 || start > stop || stop > size()) return *this;
 
-        size_t new_length = stop - start + 1;
+        size_t new_length = stop - start;
         char* new_pData = new char[new_length + 1];
         strncpy(new_pData, pData + start, new_length);
         new_pData[new_length] = '\0';
@@ -133,15 +137,19 @@ public:
 
         // trim right
         size_t pos = find_last_not_of( white_spaces );
-        erase( 0, pos );
+        erase( 0, pos + 1 );
 
         // trim left
         pos = find_first_not_of( white_spaces );
         erase( pos );
 
+
+
         return *this;
     }
 
+
+    // eltávolítja a stringból azt a karaktert, amit kapott
     string& remove_all(char c) {
         size_t new_length = 0;
         for (size_t i = 0; i < length; ++i)
@@ -150,6 +158,22 @@ public:
         size_t new_pData_index = 0;
         for (size_t i = 0; i < length; ++i)
             if( pData[i] != c ) new_pData[new_pData_index++] = pData[i];
+        delete[] pData;
+        pData = new_pData;
+        length = new_length;
+        return *this;
+    }
+
+    // eltávolitja a a jelenlegi sztingből az összes karaktert, ami a paraméterül kapott stringben van
+    string& remove_all(const string& chars) {
+        size_t new_length = 0;
+        for (size_t i = 0; i < length; ++i)
+            if( !chars.includes(pData[i]) ) new_length++;
+        char* new_pData = new char[new_length + 1];
+        size_t new_pData_index = 0;
+        for (size_t i = 0; i < length; ++i)
+            if( !chars.includes(pData[i]) ) new_pData[new_pData_index++] = pData[i];
+        new_pData[new_pData_index] = '\0';
         delete[] pData;
         pData = new_pData;
         length = new_length;

@@ -32,17 +32,43 @@ class Menu{
         interfacing = false;
     }
 
+    Ugyfel* get_ugyfel(int telefonszam){
+        int ugyfelek_szama = ugyfelek.size();
+        for(int i = 0; i < ugyfelek_szama; ++i){
+    }
+
     void uj_ugyfel(){
         os << "Uj ugyfel letrehozasa." << endl << "Ugyfel adatai:" << endl;
+        // telefonszam
         int telefonszam = stoi(get_input("telefonszam", "+36"));
+        int tel_length = countDigits(telefonszam);
+        while(tel_length > 9 || tel_length < 1) {
+                os << "\t\tNem nemgelelo bemenet. (elvart bemenet hossza: 1-9)" << endl;
+                telefonszam = stoi(get_input("telefonszam", "+36"));  tel_length = countDigits(telefonszam);}
+        // név
         string nev = get_input("nev").trim();
+        while(nev.size() < 1) {
+            os << "\t\tNem megfelelo bemenet. (elvart hossz legalabb 1)" << endl;
+            nev = get_input("nev").trim();
+        }
+        // cím
         string cim = get_input("cim").trim();
-        // .. more validation
+        while(cim.size() < 1) {
+            os << "\t\tNem megfelelo bemenet. (elvart hossz legalabb 1)" << endl;
+            cim = get_input("cim").trim();
+        }
+
         // check if ugyfel already exists
-        // convert to number, handle if not number
+        // get_ugyfel(telefonszam)
+        Ugyfel* ugyfel = get_ugyfel(telefonszam);
+        if(ugyfel != nullptr) {
+            os << "Ugyfel letrehozasa SIKERTELEN!\n\tMar letetik ugyfel a megadott telefonszammal." << endl;
+            return;
+        }
+
         //ugyfelek.push_back(new Ugyfel( static_cast<int>(telefonszam), nev, cim, new AlapCsomag("alap") ));
         ugyfelek.push_back(new Ugyfel( telefonszam, nev, cim, new AlapCsomag("alap") ));
-        os << "Ugyfel letrehozva." << endl;
+        os << "Ugyfel sikeresen letrehozva." << endl;
     }
 
     void ugyfelek_listazasa(){
