@@ -22,9 +22,14 @@ public:
     int getTel() const { return telefonszam; };
     string getNev() const { return nev; };
     string getCim() const { return cim; };
+    string getCsomagNev() const { if(csomag != nullptr) return csomag->getNev(); return "nincs"; }
 
     void kiir(std::ostream& os);
     void beolvas(std::istream& is);
+
+    ~Ugyfel(){
+        if(csomag != nullptr) delete csomag;
+    }
 };
 
 std::ostream& operator<<(std::ostream& os, Ugyfel& u);

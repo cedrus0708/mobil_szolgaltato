@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1713906765 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
+1714335604 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
 	<iostream>
 	"memtrace.h"
 	"menu.h"
 
-1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
+1714340482 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
 	"csomag.h"
 
 1713706010 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.h
@@ -46,15 +46,15 @@
 	<iterator>
 	<regex>
 
-1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.cpp
+1714337611 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.cpp
 	"menu.h"
 
-1714130131 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.h
+1714340781 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\menu.h
 	<iostream>
 	"ugyfel.h"
 	"vector.hpp"
 
-1713713662 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
+1714335604 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
 	<iostream>
 	<cstring>
 	"memtrace.h"
@@ -63,13 +63,13 @@
 1713707756 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.cpp
 	"ugyfel.h"
 
-1713705997 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.h
+1714340582 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\ugyfel.h
 	"string.h"
 	"csomag.h"
 
 1713704837 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\vector.cpp
 
-1714130549 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.h
+1714335604 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.h
 	<iostream>
 	"memtrace.h"
 

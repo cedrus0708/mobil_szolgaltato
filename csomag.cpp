@@ -25,9 +25,9 @@ double SMSMax::szamit(int percek, int sms){
 
 
 std::istream& operator>>(std::istream& is, Csomag*& cs){
-    const string AlapCsomagNev = "alap";
-    const string MobiNetNev = "mobinet";
-    const string SMSMaxNev = "smsmax";
+    const string AlapCsomagNev = "AlapCsomag";
+    const string MobiNetNev = "MobiNet";
+    const string SMSMaxNev = "SMSMax";
 
     delete cs;
     string csomag_nev;
