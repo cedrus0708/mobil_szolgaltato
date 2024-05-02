@@ -21,8 +21,8 @@ int main()
 
 #else // ha a TESZT makró nincs definiálva , a program "production" módban fut
 
-    /*Interface interface(std::cout, std::cin);
-    interface.run();*/
+    Interface interface(std::cout, std::cin);
+    interface.run();
 
 #endif // TESZT
 
