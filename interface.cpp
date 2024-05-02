@@ -1,5 +1,10 @@
-#include "menu.h"
-
+/**
+ *
+ * \file interface.cpp
+ *
+ */
+#include "interface.h"
+#include "memtrace.h"
 
 #include <iostream>
 #include <fstream>
@@ -7,14 +12,14 @@
 using std::endl;
 
 
-string Menu::read_input(const string& input_name, const string& input_start_text){
+string Interface::read_input(const string& input_name, const string& input_start_text){
     os << '\t' << input_name << ": " << input_start_text;
     string input;
     is >> std::skipws >> input;
     return input;
 };
 
-string Menu::get_string_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length){
+string Interface::get_string_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length){
     string text = read_input(input_name, input_start_text).trim();
     while(text.size() < min_length || text.size() > max_length ) {
         os << "\t\tNem megfelelo bemenet.";
@@ -26,26 +31,26 @@ string Menu::get_string_input(const string& input_name, const string& input_star
 }
 
 
-Csomag* Menu::get_csomag_input(){
+Csomag* Interface::get_csomag_input(){
     Csomag* csomag;
 
     int csomag_szam = 0;
     while( csomag_szam > 3 || csomag_szam < 1){
         os << "\tcsomag:" << endl
-            << "\t\t1. AlapCsomag" << endl
-            << "\t\t2. MobiNet" << endl
-            << "\t\t3. SMSMax" << endl;
+            << "\t\t1. " << AlapCsomagNev << endl
+            << "\t\t2. " << MobiNetNev << endl
+            << "\t\t3. " << SMSMaxNev << endl;
         csomag_szam = get_number_input("\t\tcsomag szama", "", 1, 1);
 
-        if(csomag_szam == 1) csomag = new AlapCsomag("AlapCsomag");
-        else if(csomag_szam == 2) csomag = new MobiNet("MobiNet");
-        else if(csomag_szam == 3) csomag = new SMSMax("SMSMax");
+        if(csomag_szam == 1) csomag = new AlapCsomag();
+        else if(csomag_szam == 2) csomag = new MobiNet();
+        else if(csomag_szam == 3) csomag = new SMSMax();
     }
 
     return csomag;
 }
 
-int Menu::get_number_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length){
+int Interface::get_number_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length){
     int number = stoi(read_input(input_name, input_start_text));
     size_t number_length = countDigits(number);
     while(number_length > max_length || number_length < min_length) {
@@ -55,12 +60,12 @@ int Menu::get_number_input(const string& input_name, const string& input_start_t
     return number;
 }
 
-void Menu::kilep(){
+void Interface::kilep(){
     os << "Kilepes a programbol..." << endl;
     interfacing = false;
 }
 
-size_t Menu::get_ugyfel_index(int telefonszam){
+size_t Interface::get_ugyfel_index(int telefonszam){
     size_t ugyfelek_szama = ugyfelek.size();
     for(size_t i = 0; i < ugyfelek_szama; ++i){
         if(ugyfelek[i]->getTel() == telefonszam)
@@ -69,18 +74,18 @@ size_t Menu::get_ugyfel_index(int telefonszam){
     return ugyfelek_szama;
 }
 
-bool Menu::is_valid_ugyfel_index(int index){
+bool Interface::is_valid_ugyfel_index(int index){
     return (index >= 0 && index < ugyfelek.size());
 }
 
-Ugyfel* Menu::get_ugyfel(int telefonszam){
+Ugyfel* Interface::get_ugyfel(int telefonszam){
     size_t i = get_ugyfel_index(telefonszam);
     if(is_valid_ugyfel_index(i)) return ugyfelek[i];
 
     return nullptr;
 }
 
-void Menu::uj_ugyfel(){
+void Interface::uj_ugyfel(){
     os << "Uj ugyfel letrehozasa." << endl << "Ugyfel adatai:" << endl;
 
     int telefonszam = get_number_input("telefonszam", "+36", 1, 9);
@@ -97,12 +102,11 @@ void Menu::uj_ugyfel(){
     }
 
     //ugyfelek.push_back(new Ugyfel( static_cast<int>(telefonszam), nev, cim, new AlapCsomag("alap") ));
-    //ugyfelek.push_back(new Ugyfel( telefonszam, nev, cim, new AlapCsomag("alap") ));
     ugyfelek.push_back(new Ugyfel( telefonszam, nev, cim, csomag ));
     os << "Ugyfel sikeresen letrehozva." << endl;
 }
 
-void Menu::ugyfel_torlese(){
+void Interface::ugyfel_torlese(){
     os << "Ugyfel torlese." << endl << "Ugyfel adatai:" << endl;
 
     int telefonszam = get_number_input("telefonszam", "+36", 1, 9);
@@ -123,7 +127,7 @@ void Menu::ugyfel_torlese(){
 
 }
 
-void Menu::ugyfelek_listazasa(){
+void Interface::ugyfelek_listazasa(){
     int ugyfelek_szama = ugyfelek.size();
     if(ugyfelek.isEmpty()) { os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
     os << "Ugyfelek a rendszerben:" << endl;
@@ -135,7 +139,7 @@ void Menu::ugyfelek_listazasa(){
     }
 }
 
-void Menu::ugyfelek_fajlba(){
+void Interface::ugyfelek_fajlba(){
     os << "Ugyfelek fajlba irasa." << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ofstream file(file_name.c_str());
@@ -148,7 +152,7 @@ void Menu::ugyfelek_fajlba(){
     }
 }
 
-void Menu::ugyfelek_fajlbol(){
+void Interface::ugyfelek_fajlbol(){
     os << "Ugyfelek fajbol olvasasa. A regi adatok felul irasra kerulnek!" << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ifstream file(file_name.c_str());
@@ -165,7 +169,7 @@ void Menu::ugyfelek_fajlbol(){
     }
 }
 
-void Menu::szamlazas(){
+void Interface::szamlazas(){
     os << "Szamlazas." << endl;
     int ugyfelek_szama = ugyfelek.size();
     if(!ugyfelek_szama){ os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
@@ -190,7 +194,7 @@ void Menu::szamlazas(){
     }
 }
 
-void Menu::fomenu(){
+void Interface::fomenu(){
     os << endl << "Valassz az alabbi lehetosegek kozul!" << endl;
     os << "0. Kiepes a programbol" << endl
         << "1. Ugyfel felvetele" << endl
@@ -201,7 +205,7 @@ void Menu::fomenu(){
         << "6. Szamlazas" << endl;
 }
 
-void Menu::run(){ // main_menu
+void Interface::run(){ // main_menu
     while(interfacing){
         fomenu();
 
@@ -211,7 +215,7 @@ void Menu::run(){ // main_menu
     }
 }
 
-void Menu::valasztas_kezelo(const string& valasztas){
+void Interface::valasztas_kezelo(const string& valasztas){
     if     (valasztas == "0") kilep();                  // 0. kilep
     else if(valasztas == "1") uj_ugyfel();              // 1. ugyfel felvetele
     else if(valasztas == "2") ugyfelek_listazasa();     // 2. ugyfelek listazasa
@@ -222,7 +226,7 @@ void Menu::valasztas_kezelo(const string& valasztas){
     else os << "ertelmezhetetlen";
 }
 
-Menu::~Menu(){
+Interface::~Interface(){
     int ugyfelek_szama = ugyfelek.size();
     for(int i = 0; i < ugyfelek_szama; ++i){
         delete ugyfelek[i];

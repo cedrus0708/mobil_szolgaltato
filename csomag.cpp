@@ -1,11 +1,19 @@
+/**
+ *
+ * \file csomag.cpp
+ *
+ */
 #include "csomag.h"
+#include "memtrace.h"
 
-/*HIBAKEZELÉS HA A FÁJL NEM TUDJA MELYIK CSOMAGOT AKARUNK -> HIBA*/
+
+/*HIBAKEZELÉS HA A FÁJL NEM TUDJA MELYIK CSOMAGOT AKARUNK -> THROW*/
 
 /*std::istream& operator>>(std::istream& is, Csomag& cs){
     cs.beolvas(is);
     return is;
 }*/
+
 
 double AlapCsomag::szamit(int percek, int sms){
     return percek * perc_dij + sms * sms_dij;
@@ -25,20 +33,17 @@ double SMSMax::szamit(int percek, int sms){
 
 
 std::istream& operator>>(std::istream& is, Csomag*& cs){
-    const string AlapCsomagNev = "AlapCsomag";
-    const string MobiNetNev = "MobiNet";
-    const string SMSMaxNev = "SMSMax";
 
     delete cs;
     string csomag_nev;
     is >> csomag_nev;
 
     if( csomag_nev == AlapCsomagNev )
-        cs = new AlapCsomag(AlapCsomagNev);
+        cs = new AlapCsomag();
     else if( csomag_nev == MobiNetNev )
-        cs = new MobiNet(MobiNetNev);
+        cs = new MobiNet();
     else if( csomag_nev == SMSMaxNev )
-        cs = new SMSMax(SMSMaxNev);
+        cs = new SMSMax();
     else
         cs = nullptr;
 

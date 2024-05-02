@@ -35,15 +35,16 @@
 		</Compiler>
 		<Unit filename="csomag.cpp" />
 		<Unit filename="csomag.h" />
-		<Unit filename="file.cpp" />
-		<Unit filename="file.h" />
+		<Unit filename="gtest_lite.h" />
+		<Unit filename="interface.cpp" />
+		<Unit filename="interface.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="memtrace.cpp" />
 		<Unit filename="memtrace.h" />
-		<Unit filename="menu.cpp" />
-		<Unit filename="menu.h" />
 		<Unit filename="string.cpp" />
 		<Unit filename="string.h" />
+		<Unit filename="tester.cpp" />
+		<Unit filename="tester.h" />
 		<Unit filename="ugyfel.cpp" />
 		<Unit filename="ugyfel.h" />
 		<Unit filename="vector.cpp" />

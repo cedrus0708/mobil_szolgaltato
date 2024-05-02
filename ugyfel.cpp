@@ -1,20 +1,37 @@
+/**
+ *
+ * \file ugyfel.cpp
+ *
+ */
 #include "ugyfel.h"
+#include "memtrace.h"
 
-void Ugyfel::beolvas(std::istream& is){
-    is >> telefonszam >> nev >> cim >> csomag;
+string Ugyfel::getCsomagNev() const {
+    if(csomag != nullptr)
+        return csomag->getNev();
+    return "nincs";
 }
 
-void Ugyfel::kiir(std::ostream& os){
-    //os << "telefonszam: " << telefonszam << "\tnev: "<<  nev << "\tcim: "<< cim << "\tcsomag: "<< csomag;
-    os << telefonszam << '\t' << nev << '\t' << cim << '\t' << csomag->getNev();
+double Ugyfel::szamlaz(int perc, int sms) const {
+    if(csomag == nullptr) return 0;
+    return csomag->szamit(perc, sms);
 }
 
-std::ostream& operator<<(std::ostream& os, Ugyfel& u){
+void Ugyfel::beolvas(std::istream& is) {
+    is >> telefonszam; is.get(); // szám és sorlezárás
+    is >> nev >> cim >> csomag;  // további adatok
+}
+
+void Ugyfel::kiir(std::ostream& os) const {
+    os << telefonszam << std::endl << nev << std::endl << cim << std::endl << csomag->getNev();
+}
+
+std::ostream& operator<<(std::ostream& os, Ugyfel& u) {
     u.kiir(os);
     return os;
 }
 
-std::istream& operator>>(std::istream& is, Ugyfel& u){
+std::istream& operator>>(std::istream& is, Ugyfel& u) {
     u.beolvas(is);
     return is;
 }

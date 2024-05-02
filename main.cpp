@@ -1,59 +1,32 @@
 #include <iostream>
-
 #include "memtrace.h"
 
-/* MÉG NEM MŰKÖDIK NEGAGTÍV SZÁMOKRA! */
-//#include "string.h"
+#include "interface.h"
 
-/*HIBAKEZELÉS*/
+/// A TESZT makróval lehet állítani, hogy a program teszteljen, vagy normálisan fusson.
+/// TESZT = 0 -> nem tesztel
+/// TESZT > 0 -> tesztel
+#define TESZT 0
 
-//#include "ugyfel.h"
-#include "menu.h" //<-- interface
-
-//#include <iostream>
-//#include <fstream>
-
-
-/**
-A string erase nem jó.
-Csak egy egyik index lehet olya, (első) hogy tartalmazza az új string.
-A végénél egyel túl kell mutatni.
-*/
-
-using std::cout;
-using std::cin;
-using std::endl;
+#if TESZT
+#include "tester.h"
+#endif // TESZT
 
 int main()
 {
 
-    /*string a = "  asoma  \t \t";
-    a.trim();
-    //cout << a.find_last_not_of(" \t");
+#if TESZT // ha a TESZT makró definiálva van, tesztel a program
 
-    //a.trim();
-    cout<< "a:" << a<<a.size() <<".";*/
+    run_tests();
 
-    /*
-    jelenleg az a gond, hogy hogyan olvassam be a telefonszámot integer-be.
-     csináltam egy templatet-ami így bármit be tud olvasni. De szerintem nem ez lesz a megfelelő módszer erre.
-     string-ként kell beolvasni, és utána számmá alakítani.
-     Ehhez az kell, hogy a stringből el tudjam tüntetni a white-space-ket.
-     Ez azért okozott gondt, mert nem akarom a string osztályom tele pakolni ehhez hasonló random függvényekkel, hogy remove_white_spaces.
-     Erre megoldás az lenne, hogy úgy csinálom, mint az az std::string-ben is van, de az már iterátorokat igényel a stringen belülre is.
-     VAGY MÉGSEM? Csak egy eleje és vége pointer kell neki, amit viszont nem nehéz előhozni!!
-      -> MEGOLDÁS: https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
-    gn
-    */
+#else // ha a TESZT makró nincs definiálva , a program "production" módban fut
 
-    Menu menu(cout, cin);
+    /*Interface interface(std::cout, std::cin);
+    interface.run();*/
 
-    menu.fomenu();
+#endif // TESZT
 
-    /*std::ifstream myfile("ugyfelek.txt");
-    Ugyfel u;
-    myfile >> u;
-    cout << u.getTel();*/
+
 
     return 0;
 }

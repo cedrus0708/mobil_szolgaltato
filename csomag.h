@@ -1,56 +1,73 @@
+/**
+ * \file csomag.h
+ *
+ * Ez a fájl tartalmazza az abszrakt Csomag osztály deklarációját és leszármazottjait (AlapCsomag, MobiNet, SMSMax).
+ */
 #ifndef _CSOMAG
 #define _CSOMAG
 
 #include <iostream>
 #include "string.h"
 
-/*const string AlapCsomagNev = "alap";
-const string MobiNetNev = "mobinet";
-const string SMSMaxNev = "smsmax";*/
+#include "memtrace.h"
 
-/*COPY CONSTRUCTOR, DESTRUCTOR ?? */
+const string AlapCsomagNev = "AlapCsomag";
+const string MobiNetNev = "MobiNet";
+const string SMSMaxNev = "SMSMax";
+
 class Csomag {
-private:
-    const string nev;
 protected:
-    const double perc_dij;
-    const double sms_dij;
+    const double perc_dij; ///< egy lebeszélt perc ára
+    const double sms_dij;  ///< egy sms ára
 public:
-    Csomag(const string& nev, const double perc_dij, const double sms_dij) : nev(nev), perc_dij(perc_dij), sms_dij(sms_dij) {};
+    /// Konstruktor
+    Csomag(const double perc_dij, const double sms_dij) : perc_dij(perc_dij), sms_dij(sms_dij) {};
 
-    string getNev() const { return nev; };
+    /// Visszaadja a csomag nevét.
+    virtual string getNev() const = 0;
 
+    /// Visszaadja, az fizetendő mennyiséget.
+    /// @param percek - ennyi percet beszélt
+    /// @param sms - küldött sms-ek száma
+    /// @return fizetendő összeg
     virtual double szamit(int percek, int sms) = 0;
 
+    /// Destruktor
     virtual ~Csomag(){};
 };
 
 class AlapCsomag : public Csomag {
 
 public:
-    AlapCsomag(const string& nev) : Csomag(nev, 10, 40) {};
+    AlapCsomag() : Csomag(10, 40) {};
+
+    inline string getNev() const { return AlapCsomagNev; };
 
     double szamit(int percek, int sms);
-
-
 };
 
 class MobiNet : public Csomag {
-    int ingyenes_sms;
+    const int ingyenes_sms; ///< ennyi sms-t lehet ingyenesen küldeni
 public:
-    MobiNet(const string& nev) : Csomag(nev, 5, 50), ingyenes_sms(10) {};
+    MobiNet() : Csomag(5, 50), ingyenes_sms(10) {};
+
+    inline string getNev() const { return MobiNetNev; };
 
     double szamit(int percek, int sms);
 };
 
 class SMSMax : public Csomag {
+    static bool ingyenes_az_sms; ///< ingyenes-e az sms jelen pillanatban
 public:
-    SMSMax(const string& nev) : Csomag(nev, 7, 10) {};
+    SMSMax() : Csomag(7, 10) {};
+
+    inline string getNev() const { return SMSMaxNev; };
 
     double szamit(int percek, int sms);
 };
 
-/*A kapott csomagot felszabadítja!!!*/
+/// Beolvasás
+/// A kapott "régi" csomagot felszabadítja!!!
 std::istream& operator>>(std::istream& is, Csomag*& cs);
 
 #endif // _CSOMAG

@@ -1,14 +1,15 @@
-#ifndef _STRING
-#define _STRING
-
-#include <iostream>
-#include "memtrace.h"
-
 /**
  * \file string.h
  *
  * Ez a fájl tartalmazza a String osztály deklarációját és inline függvényeit.
  */
+#ifndef _STRING
+#define _STRING
+
+#include <iostream>
+
+#include "memtrace.h"
+
 
 /**
  * String osztály.
@@ -16,7 +17,6 @@
  * length: hossz. A hosszba nem számít bele a lezáró nulla.
  */
 
-int countDigits(int number);
 
 class string {
     size_t length;  ///< hossz lezáró nulla nélkül
@@ -43,7 +43,7 @@ public:
 
 
     /// Destruktor
-    ~string(){ delete[] pData; };
+    inline ~string(){ delete[] pData; };
 
 
 
@@ -62,123 +62,89 @@ public:
     /// @return baoldali (módosított) string (referenciája)
     string& operator=(const string& rhs_s);
 
-    /// Két stringet összefûz
+    /// Két stringet összefűz
     /// @param rhs_s - jobboldali string
     /// @return új string, ami tartalmazza a két stringet egymás után
     string operator+(const string& rhs_s) const ;
 
-    /// Sztringhez karaktert összefûz
+    /// Sztringhez karaktert összefűz
     /// @param rhs_c - jobboldali karakter
     /// @return új string, ami tartalmazza a stringet és a karaktert egymás után
     inline string operator+(char rhs_c) const { return *this + string(rhs_c); }
 
-    /// A string egy megadott indexû elemének referenciájával tér vissza.
+    /// A string egy megadott indexű elemének referenciájával tér vissza.
     /// @param idx - karakter indexe
     /// @return karakter (referencia)
     ///         Indexelési hiba esetén const char* kivételt dob.
     char& operator[](unsigned int idx);
 
-    /// A string egy megadott indexû elemének referenciájával tér vissza.
+    /// A string egy megadott indexű elemének referenciájával tér vissza.
     /// @param idx - karakter indexe
     /// @return karakter (referencia)
     ///         Indexelési hiba esetén const char* kivételt dob.
     const char& operator[](unsigned int idx) const;
 
+    /// Két string összehasonlítása.
+    /// @param cmp - az összehasonlítandó string
+    /// @return egyenlőek-e
     bool operator==(const string& cmp) const;
 
+    /// Üres-e a string.
+    /// @return üres-e
     inline bool isEmpty() const { return length == 0; };
 
+    /// Tartalmazza-e a string a megadott karaktert.
+    /// @param c - a vizsgált karaker
+    /// @return tartalmazza-e
+    bool includes(char c) const;
 
-    bool includes(char c) const {
-        for(size_t i = 0; i < length; ++i)
-            if(pData[i] == c) return true;
-        return false;
-    }
+    /// Megkeresi az első olyan indexet, amely tartalmazza a paraméterül kapott string valamelyik karaterét.
+    /// @param characters - a karaktereket tartalamzó string
+    /// @return az első tartalmazott index
+    size_t find_first_of(const string& characters) const;
 
-    // visszadja azt az első indexet, amely a string elejétől nézve nem tartalmazza a paraméterül kapott string egyik elemét.
-    // a visszaadott index még pont tartalmazza.
-    size_t find_first_not_of(const string& characters) const {
-        size_t i = 0;
-        if(length)
-            while(characters.includes(pData[i]) && i < length ) i++;
-        return i;
-    }
-    size_t find_last_not_of(const string& characters) const {
-        size_t i = size() - 1;
-        if(length)
-            while(characters.includes(pData[i]) && i > 0 ) i--;
-        return i;
-    }
+    /// Megkeresi azt az indexet, ahol utoljára tartalmazza a string a paraméterül kapott string valamelyik karakterét.
+    /// @param characters - a karaktereket tartalmazó string
+    /// @return az utolsó olyan index, amely még tartalmazza a paraméterül kapott string valamelyik karakterét
+    size_t find_last_of(const string& characters) const;
 
-    string& erase(size_t start){
-        return erase(start, size());
-    }
+    /// Megkeresi azt az indexet, amely először nem tartalmazza a paraméterül kapott string valamelyik karakterét.
+    /// @param characters - a karaktereket tartalmazó string
+    /// @return az első index ami már nem tartalmazza a paraméterül kapott string valamelyik elemét
+    size_t find_first_not_of(const string& characters) const;
 
-    // const char* tipusu kivelel
-    // elhagyja a megadott index alatti és feletti részeit a stringnek. (maguk az indexek maradnak)
-    // elhagyja a megadott index alatti és feletti részeit a stringnek.
-    // Az alsó index = start nem kerül elhagyásra, de a felső index = stop igen.
-    // új string: [sart, stop)
-    string& erase(size_t start, size_t stop){
-        if(start < 0 || start > stop || stop > size()) return *this;
+    /// Megkeresi azt az utolsó olyan karaktert a stringben, amely utoljára tartalmaz olyan karaktert, amit a paraméterül kapott string nem.
+    /// @param characters - a karaktereket tartalmazó string
+    /// @return az utolsó olyan index ami még a megadott string egyik karakterét sem tartalmazza
+    size_t find_last_not_of(const string& characters) const;
 
-        size_t new_length = stop - start;
-        char* new_pData = new char[new_length + 1];
-        strncpy(new_pData, pData + start, new_length);
-        new_pData[new_length] = '\0';
-        delete[] pData;
-        pData = new_pData;
-        length = new_length;
-        return *this;
-    }
+    /// Elhagyja a strnig elejét az index alapján.
+    /// @param start - az uj string eleje (ezt már tartalmazza az uj string)
+    /// @return az ujjonan létrejövő string
+    ///         Indexelési hiba esetén const char* kivételt dob.
+    string& erase(size_t start);
 
-    string& trim(){
-        string white_spaces = " \f\n\r\t\v";
+    /// Elhagyja a string elejét és a végét az indexek alapján.
+    /// @param start - az uj string errol az indexrol indul (tartalmazza az uj)
+    /// @param stop - ettől az indextől már nem tartalmaz semmit (ezt már nem tartalmazza az uj)
+    /// @return az így létrejött új string: [start, stop)
+    ///         Indexelési hiba esetén const char* kivételt dob.
+    string& erase(size_t start, size_t stop);
 
-        // trim right
-        size_t pos = find_last_not_of( white_spaces );
-        erase( 0, pos + 1 );
-
-        // trim left
-        pos = find_first_not_of( white_spaces );
-        erase( pos );
+    /// Levága a string eléről és a végéről a white-space-ket.
+    /// @return a körülvágott string
+    string& trim();
 
 
+    /// A stringből mindenhonnan eltávolítja a kapott karaktert.
+    /// @param c - az eltávolítandó karakter
+    /// @return az igy kialakuló string
+    string& remove_all(char c);
 
-        return *this;
-    }
-
-
-    // eltávolítja a stringból azt a karaktert, amit kapott
-    string& remove_all(char c) {
-        size_t new_length = 0;
-        for (size_t i = 0; i < length; ++i)
-            if(pData[i] != c) new_length++;
-        char* new_pData = new char[new_length + 1];
-        size_t new_pData_index = 0;
-        for (size_t i = 0; i < length; ++i)
-            if( pData[i] != c ) new_pData[new_pData_index++] = pData[i];
-        delete[] pData;
-        pData = new_pData;
-        length = new_length;
-        return *this;
-    }
-
-    // eltávolitja a a jelenlegi sztingből az összes karaktert, ami a paraméterül kapott stringben van
-    string& remove_all(const string& chars) {
-        size_t new_length = 0;
-        for (size_t i = 0; i < length; ++i)
-            if( !chars.includes(pData[i]) ) new_length++;
-        char* new_pData = new char[new_length + 1];
-        size_t new_pData_index = 0;
-        for (size_t i = 0; i < length; ++i)
-            if( !chars.includes(pData[i]) ) new_pData[new_pData_index++] = pData[i];
-        new_pData[new_pData_index] = '\0';
-        delete[] pData;
-        pData = new_pData;
-        length = new_length;
-        return *this;
-    }
+    /// Eltávolítja a stringből az összes karaktert, amit a paraméterül kapott stringben előfordul.
+    /// @param chars - string, amely az eltávolítandó karaktereket tartalmazza
+    /// @return az így létrejövő string
+    string& remove_all(const string& chars);
 
 };
 
@@ -189,18 +155,26 @@ public:
 /// @return os
 std::ostream& operator<<(std::ostream& os, const string& s);
 
-/// Beolvas az istream-rõl egy szót egy string-be.
+/// Beolvas az istream-ről egy szót egy string-be.
 /// @param is - istream típusú objektum
 /// @param s0 - string, amibe beolvas
 /// @return is
 std::istream& operator>>(std::istream& is, string& s);
 
-/// Karakterhez stringet fûz
+/// Karakterhez stringet fűz
 /// @param ch - karakter
 /// @param str - string
 /// @return új string, ami tartalmazza a karaktert és a stringet egymás után
 inline string operator+(char ch, const string& str) { return string(ch) + str; }
 
+/// Megszámolja hány számjegyből áll egy szám.
+/// @param number - ennek a számjegyeit számolja
+/// @return a számjegyek száma (ha negatív, akkor a negatív jelet is bele számolja)
+int countDigits(int number);
+
+/// Stringet számmá alakít.
+/// @param str - számmá alakítandó string
+/// @return számmá alakítva a string (white spaceket kiszedve, egybe)
 int stoi(const string& str);
 
 

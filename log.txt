@@ -1,5 +1,12 @@
+todo-notes:
+	MÉG NEM MŰKÖDIK NEGAGTÍV SZÁMOKRA a string konstruktor!
+	count digit negativ szamokkal!
+	csomag szama > 3 es kisebb mint 10 nincs hiba
+	FILE TARTALMA HIBAS ESETBEN EXEPTION 
+
 Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
 pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
+
 
 main
 string.h + string.cpp
