@@ -15,11 +15,11 @@
 int main()
 {
 
-#if TESZT // ha a TESZT makró definiálva van, tesztel a program
+#if TESZT   // ha a TESZT makró definiálva van, tesztel a program
 
     run_tests();
 
-#else // ha a TESZT makró nincs definiálva , a program "production" módban fut
+#else       // ha a TESZT makró nincs definiálva , a program "production" módban fut
 
     Interface interface(std::cout, std::cin);
     interface.run();

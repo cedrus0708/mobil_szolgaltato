@@ -1,7 +1,7 @@
 /**
  * \file interface.h
  *
- * Ez a f·jl tartalmazza az Interface oszt·ly deklar·ciÛj·t Ès inline f¸ggvÈnyeit.
+ * Ez a f√°jl tartalmazza az Interface oszt√°ly deklar√°ci√≥j√°t √©s inline f√ºggv√©nyeit.
  */
 #ifndef _INTERFACE
 #define _INTERFACE
@@ -19,32 +19,39 @@ using std::endl;
 class Interface{
 private:
 
-    std::ostream& os;           ///< ide Ìrja a kimenetÈt
-    std::istream& is;           ///< innen olvasssa a bemenetÈt
+    std::ostream& os;           ///< ide √≠rja a kimenet√©t
+    std::istream& is;           ///< innen olvasssa a bemenet√©t
 
     bool interfacing;           ///< fut-e az interface
 
-    vector<Ugyfel*> ugyfelek;   ///< nyilv·ntartott ¸gyfelek
+    vector<Ugyfel*> ugyfelek;   ///< nyilv√°ntartott √ºgyfelek≈±
+
+    // csomagokbol allo heterogen kollekcio???
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    /// Olvas a bemenetrıl egÈszen sor vÈge jelig.
+
+    /// Olvas a bemenetr√µl eg√©szen sor v√©ge jelig.
     string read_input(const string& input_name, const string& input_start_text = "");
-    /// Olvas a bemenetrıl biztons·gosan, Ès kˆr¸lv·gva az ÌgÈrt tÌpust adja.
+    /// Olvas a bemenetr√µl biztons√°gosan, √©s k√∂r√ºlv√°gva az √≠g√©rt t√≠pust adja.
     string get_string_input(const string& input_name, const string& input_start_text = "", const size_t min_length = 1, const size_t max_length = -1 );
     int get_number_input(const string& input_name, const string& input_start_text = "", const size_t min_length = 1, const size_t max_length = -1);
-    Csomag* get_csomag_input();
+    Csomag* get_csomag_input(); /// A csomagot lefoglalja. A felszabad√≠t√°s a h√≠v√≥ feladata!
 
-    /// Az ¸gyfelek elÈrÈse
+    /// √úgyfelek vektor ki√ºr√≠t√©se
+    void delete_ugyfelek();
+
+    /// Az √ºgyfelek el√©r√©se
     bool is_valid_ugyfel_index(int index);
     size_t get_ugyfel_index(int telefonszam);
     Ugyfel* get_ugyfel(int telefonszam);
 
-    /// Fımen¸ Ès a hozz· tartozÛ v·laszt·s kezelı
+
+    /// F√µmen√º √©s a hozz√° tartoz√≥ v√°laszt√°s kezel≈ë
     void fomenu();
     void valasztas_kezelo(const string& valasztas);
 
-    /// A men¸pontok
+    /// A men√ºpontok
     void kilep();               // 0.
     void uj_ugyfel();           // 1.
     void ugyfelek_listazasa();  // 2.
@@ -52,19 +59,24 @@ private:
     void ugyfelek_fajlba();     // 4.
     void ugyfelek_fajlbol();    // 5.
     void szamlazas();           // 6.
+    void sms_teszt_toggle();
+
+    /// Seg√©df√ºggv√©nyek a men√ºpontokhoz
+    string szamlazas_szamol(std::ifstream& source_file, std::ostream& os);
+
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 public:
     /// Konstruktor
-    /// @param os - ostream, ahova a menu Ìrja a kimenetÈt
-    /// @param is - istream, ahonnan olvassa a bemenetÈt
+    /// @param os - ostream, ahova a menu √≠rja a kimenet√©t
+    /// @param is - istream, ahonnan olvassa a bemenet√©t
     Interface(std::ostream& os, std::istream& is) : os(os), is(is), interfacing(true) {};
 
     /// Desktuktor
     ~Interface();
 
-    /// Fı f¸ggvÈny. Meghiv·s·val elindul a kommunik·ciÛ a felhaszn·lÛval.
-    /// KilÈpÈsig fut.
+    /// F√µ f√ºggv√©ny. Meghiv√°s√°val elindul a kommunik√°ci√≥ a felhaszn√°l√≥val.
+    /// Kil√©p√©sig fut.
     void run();
 
 };

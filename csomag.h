@@ -63,6 +63,9 @@ public:
 
     inline string getNev() const { return SMSMaxNev; };
 
+    inline bool getIngyenesSms(){ return ingyenes_az_sms; };
+    inline void toggle_sms_ingyenesseg() { ingyenes_az_sms = !ingyenes_az_sms; }
+
     double szamit(int percek, int sms);
 };
 

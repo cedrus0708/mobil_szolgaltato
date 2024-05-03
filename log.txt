@@ -1,8 +1,14 @@
 todo-notes:
-	MÉG NEM MŰKÖDIK NEGAGTÍV SZÁMOKRA a string konstruktor!
-	count digit negativ szamokkal!
-	csomag szama > 3 es kisebb mint 10 nincs hiba
+	OK:1 és 3on kuivul üzenet	
+	OK:MÉG NEM MŰKÖDIK NEGAGTÍV SZÁMOKRA a string konstruktor!
+	OK:count digit negativ szamokkal!
 	FILE TARTALMA HIBAS ESETBEN EXEPTION 
+	tesztek
+	OK:szamlazas eredmenyenek fajlbairasa
+	cpp függvenyek sorba rendezni
+	OK:globalis valtozo
+	minden csomag erteke allithato lehetne
+	fo valasztasnal konvertalja szamma
 
 Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
 pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
@@ -10,10 +16,10 @@ pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonsz
 
 main
 string.h + string.cpp
-vector.h(pp) + vector.cpp - iterátor is <- "Generikus Tároló"
+vector.h(pp) + vector.cpp - x:iterátor is <- "Generikus Tároló"
 ugyfel.h + ugyfel.cpp
 csomag.h + csomag.cpp
-file.h + file.cpp
+x:file.h + file.cpp
 menu.h + menu.cpp
 
 ----

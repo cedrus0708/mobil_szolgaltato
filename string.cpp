@@ -25,7 +25,12 @@ string::string(const char* p) {
 string::string(int value){
     length = countDigits(value);
     pData = new char[length + 1];
-    for (int i = length - 1; i >= 0; i--) {
+    int negative = value < 0 ? 1 : 0; // 1: ha igen  0: ha nem
+    if(negative){
+        pData[0] = '-';
+        value = (-1)*value;
+    }
+    for (int i = length - 1; i >= negative; i--) {
         pData[i] = '0' + (value % 10);
         value /= 10;
     }
@@ -191,7 +196,9 @@ std::istream& operator>>(std::istream& is, string& s){
 }
 
 int countDigits(int number) {
+    if(number == 0) return 1;
     int count = 0;
+    if(number < 0) count++;
     while (number != 0) {
         number /= 10;
         count++;

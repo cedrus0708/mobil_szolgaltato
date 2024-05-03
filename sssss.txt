@@ -1,0 +1,2 @@
+ssssoma: 600Ft
+soma: 50Ft

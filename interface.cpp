@@ -45,6 +45,7 @@ Csomag* Interface::get_csomag_input(){
         if(csomag_szam == 1) csomag = new AlapCsomag();
         else if(csomag_szam == 2) csomag = new MobiNet();
         else if(csomag_szam == 3) csomag = new SMSMax();
+        else os << "\t\tNincs ilyen menupont!" << endl;
     }
 
     return csomag;
@@ -88,16 +89,17 @@ Ugyfel* Interface::get_ugyfel(int telefonszam){
 void Interface::uj_ugyfel(){
     os << "Uj ugyfel letrehozasa." << endl << "Ugyfel adatai:" << endl;
 
+    // adatok bekérése
     int telefonszam = get_number_input("telefonszam", "+36", 1, 9);
     string nev = get_string_input("nev");
     string cim = get_string_input("cim");
     Csomag* csomag = get_csomag_input();
 
-    // check if ugyfel already exists
-    // get_ugyfel(telefonszam)
+    // létezik-e már az ügyfél
     Ugyfel* ugyfel = get_ugyfel(telefonszam);
     if(ugyfel != nullptr) {
         os << "Ugyfel letrehozasa SIKERTELEN!\n\tMar letezik ugyfel a megadott telefonszammal." << endl;
+        delete csomag;
         return;
     }
 
@@ -152,6 +154,7 @@ void Interface::ugyfelek_fajlba(){
     }
 }
 
+
 void Interface::ugyfelek_fajlbol(){
     os << "Ugyfelek fajbol olvasasa. A regi adatok felul irasra kerulnek!" << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
@@ -159,7 +162,8 @@ void Interface::ugyfelek_fajlbol(){
     if(!file.is_open()) { // THROW
        os << "A megadott fajl nem talalhato! (" << file_name << ")" << endl; return;
     }
-    ugyfelek.clear();
+
+    delete_ugyfelek();
 
     int ugyfelek_szama; file >> ugyfelek_szama;
     for(int i = 0; i < ugyfelek_szama; ++i){
@@ -169,32 +173,73 @@ void Interface::ugyfelek_fajlbol(){
     }
 }
 
-void Interface::szamlazas(){
-    os << "Szamlazas." << endl;
+string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os){
     int ugyfelek_szama = ugyfelek.size();
-    if(!ugyfelek_szama){ os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
-    os << "Add meg az ugyfelek tovabbi adatait tartalmazo falj nevet!" << endl;
-    string file_name = get_string_input("fajlnev") + ".txt";
-    std::ifstream file(file_name.c_str());
-    if(!file.is_open()) { // THROW
-       os << "A megadott fajl nem talalhato! (" << file_name << ")" << endl; return;
+
+    int ugyfelek_szama_fajl; source_file >> ugyfelek_szama_fajl;
+    if(ugyfelek_szama != ugyfelek_szama_fajl){ // THROW
+        return "A fajl tartalma nem megfelelo. (elter az ugyfelek szama)";
     }
 
-    int ugyfelek_szama_fajl; file >> ugyfelek_szama_fajl;
-    if(ugyfelek_szama != ugyfelek_szama_fajl){ // THROW
-        os << "A fajl tartalma nem megfelelo. (elter az ugyfelek szama)" << endl; return;
-    }
     for(int i = 0; i < ugyfelek_szama; ++i){
-        int telefonszam, percek, sms; file >> telefonszam >> percek >> sms;
+        int telefonszam, percek, sms; source_file >> telefonszam >> percek >> sms;
         Ugyfel* ugyfel = get_ugyfel(telefonszam); // throw
         if(!ugyfel) {
-            os << "A fajlban ismeretlen ugyfel telefonszama van!" << endl; return;
+            return "A fajlban ismeretlen ugyfel telefonszama van!";
         }
         os << ugyfel->getNev() << ": " << ugyfel->szamlaz(percek, sms) << "Ft" << endl; // throw
     }
+
+    return "A szamazas sikeresen veget ert.";
+
+}
+
+void Interface::szamlazas(){
+    os << "Szamlazas." << endl;
+
+    if(!ugyfelek.size()){ os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
+
+    os << "Add meg az ugyfelek tovabbi adatait tartalmazo falj nevet!" << endl;
+    string source_file_name = get_string_input("fajlnev") + ".txt";
+    std::ifstream source_file(source_file_name.c_str());
+    if(!source_file.is_open()) { // THROW
+       os << "A megadott fajl nem talalhato! (" << source_file_name << ")" << endl; return;
+    }
+
+    string result;
+    os << "Add meg, hova irja a rendszer a szamlazas eredmenyet! (opcionalis)" << endl;
+    string target_file_name = get_string_input("fajlnev", "", 0);
+    if( !target_file_name.isEmpty() ){
+        target_file_name = target_file_name + ".txt";
+        if(source_file_name == target_file_name){
+            os << "Nem lehet a forras es a cel falj azonos!" << endl; return;
+        }
+        std::ofstream target_file(target_file_name.c_str());
+        // megnyilt a faljl? // THROW
+
+        result = szamlazas_szamol( source_file, target_file );
+        os << "Az eredmenyek a " << source_file_name << " allomanyban talalhato." << endl;
+    } else {
+        result = szamlazas_szamol( source_file, os );
+    }
+
+    os << result << endl;
+}
+
+void Interface::sms_teszt_toggle(){
+
+    os << "\tAtallitva!" << endl;
+
+    SMSMax smsmax;
+    smsmax.toggle_sms_ingyenesseg();
+
 }
 
 void Interface::fomenu(){
+
+    SMSMax smsmax;
+    bool bool_test_free = smsmax.getIngyenesSms();
+
     os << endl << "Valassz az alabbi lehetosegek kozul!" << endl;
     os << "0. Kiepes a programbol" << endl
         << "1. Ugyfel felvetele" << endl
@@ -202,7 +247,8 @@ void Interface::fomenu(){
         << "3. Ugyfel torlese" << endl
         << "4. Ugyfelek fajlba irasa" << endl
         << "5. Ugyfelek betoltese fajlbol" << endl
-        << "6. Szamlazas" << endl;
+        << "6. Szamlazas" << endl
+        << "7. SMSMax sms: " << (bool_test_free ? "ingyenes" : "fizetos") << endl;
 }
 
 void Interface::run(){ // main_menu
@@ -216,6 +262,7 @@ void Interface::run(){ // main_menu
 }
 
 void Interface::valasztas_kezelo(const string& valasztas){
+    // try {
     if     (valasztas == "0") kilep();                  // 0. kilep
     else if(valasztas == "1") uj_ugyfel();              // 1. ugyfel felvetele
     else if(valasztas == "2") ugyfelek_listazasa();     // 2. ugyfelek listazasa
@@ -223,13 +270,20 @@ void Interface::valasztas_kezelo(const string& valasztas){
     else if(valasztas == "4") ugyfelek_fajlba();        // 4. ugyfelek fajlba irasa
     else if(valasztas == "5") ugyfelek_fajlbol();       // 5. ugyfelek fajlbol ovasasa
     else if(valasztas == "6") szamlazas();              // 6. szamlazas
-    else os << "ertelmezhetetlen";
+    else if(valasztas == "7") sms_teszt_toggle();       // 7. CSOAMAGOK SZERKESZTÉSE
+                                                            // AHOL MINDEN CSOMAGNAK LEHET ÁLLÍTANI AZ ÉRTÉKÉT
+    else os << "Nincs ilyen menupont!";
 }
 
-Interface::~Interface(){
+void Interface::delete_ugyfelek(){
     int ugyfelek_szama = ugyfelek.size();
     for(int i = 0; i < ugyfelek_szama; ++i){
         delete ugyfelek[i];
     }
+    ugyfelek.clear();
+}
+
+Interface::~Interface(){
+    delete_ugyfelek();
 }
 

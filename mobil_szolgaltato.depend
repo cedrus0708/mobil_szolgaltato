@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1714672267 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
+1714737490 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\main.cpp
 	<iostream>
 	"memtrace.h"
 	"interface.h"
 	"tester.h"
 
-1714668939 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
+1714744919 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.cpp
 	"csomag.h"
 	"memtrace.h"
 
-1714674852 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.h
+1714745206 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\csomag.h
 	<iostream>
 	"string.h"
 	"memtrace.h"
@@ -60,7 +60,7 @@
 	"ugyfel.h"
 	"vector.hpp"
 
-1714665303 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
+1714737242 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\string.cpp
 	"string.h"
 	"memtrace.h"
 	<iostream>
@@ -163,13 +163,13 @@
 
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\vector.cpp
 
-1714676644 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\interface.cpp
+1714745228 source:x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\interface.cpp
 	"interface.h"
 	"memtrace.h"
 	<iostream>
 	<fstream>
 
-1714676350 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\interface.h
+1714745139 x:\0gyorsba\_prog2\_hazi\_tel_k\mobil_szolgaltato\interface.h
 	<iostream>
 	<fstream>
 	"ugyfel.h"
