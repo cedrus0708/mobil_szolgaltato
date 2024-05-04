@@ -9,6 +9,11 @@ todo-notes:
 	OK:globalis valtozo
 	minden csomag erteke allithato lehetne
 	fo valasztasnal konvertalja szamma
+	OK:string +=
+	hibakereles unblock
+	hibakezeles fajtai
+
+A programban mindenhol std::exception kivételt használok.
 
 Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
 pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.

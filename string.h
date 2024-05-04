@@ -65,7 +65,13 @@ public:
     /// Két stringet összefűz
     /// @param rhs_s - jobboldali string
     /// @return új string, ami tartalmazza a két stringet egymás után
-    string operator+(const string& rhs_s) const ;
+    string operator+(const string& rhs_s) const;
+
+    /// Magához fűzés.
+    /// @param rhs_s - magához a végére fűzi
+    /// @return a már összefűzött string
+    string& operator+=(const string& rhs_s);
+
 
     /// Sztringhez karaktert összefűz
     /// @param rhs_c - jobboldali karakter
@@ -166,6 +172,11 @@ std::istream& operator>>(std::istream& is, string& s);
 /// @param str - string
 /// @return új string, ami tartalmazza a karaktert és a stringet egymás után
 inline string operator+(char ch, const string& str) { return string(ch) + str; }
+
+/// Egy c_string-hez fűz stringet
+/// @param c_str - c-féle string
+/// @return új string, ami tartalmazza a c_stringet és a stringet egymás után.
+inline string operator+(const char* c_str, const string& str) { return string(c_str) + str; }
 
 /// Megszámolja hány számjegyből áll egy szám.
 /// @param number - ennek a számjegyeit számolja

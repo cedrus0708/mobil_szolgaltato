@@ -8,6 +8,7 @@
 
 #include <iostream>             // Kiíratáshoz
 #include <cstring>              // Stringműveletekhez
+#include <exception>
 
 
 string::string(char c) :length(1), pData(new char[2]) {
@@ -16,7 +17,7 @@ string::string(char c) :length(1), pData(new char[2]) {
 }
 
 string::string(const char* p) {
-    if(p == nullptr) throw "string: null pointer a konstruktorban";
+    if(p == nullptr) throw std::invalid_argument("string: nullpointer a konstruktorban");
     length = strlen(p);
     pData = new char[length + 1];
     strcpy(pData, p);
@@ -64,13 +65,24 @@ string string::operator+(const string& rhs_s) const {
     return new_string;
 }
 
+string& string::operator+=(const string& rhs_s){
+    int new_length = length + rhs_s.length;
+    char* new_pData = new char[new_length + 1];
+    strcpy( new_pData, pData );
+    strcpy( new_pData + length, rhs_s.pData );
+    delete[] pData;
+    pData = new_pData;
+    length = new_length;
+    return *this;
+}
+
 char& string::operator[](unsigned int idx){
-    if(idx < 0 || idx >= length) throw "string: indexelési hiba";
+    if(idx < 0 || idx >= length) throw std::out_of_range("string: indexelési hiba");
     return pData[idx];
 }
 
 const char& string::operator[](unsigned int idx) const {
-    if(idx < 0 || idx >= length) throw "string: indexelési hiba";
+    if(idx < 0 || idx >= length) throw std::out_of_range("string: indexelési hiba");
     return pData[idx];
 }
 

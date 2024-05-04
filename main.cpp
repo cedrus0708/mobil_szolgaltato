@@ -1,6 +1,6 @@
 #include <iostream>
+#include <exception>
 #include "memtrace.h"
-
 #include "interface.h"
 
 /// A TESZT makróval lehet állítani, hogy a program teszteljen, vagy normálisan fusson.
@@ -21,8 +21,21 @@ int main()
 
 #else       // ha a TESZT makró nincs definiálva , a program "production" módban fut
 
-    Interface interface(std::cout, std::cin);
-    interface.run();
+    try{
+
+        Interface interface(std::cout, std::cin);
+        interface.run();
+
+    }
+    catch( const std::exception& error ){
+        std::cout << "Vegzetes hiba lepett fel a program futasa soran" << std::endl << error.what();
+    }
+    catch(...){
+        std::cout << "Kezeletlen hiba lepett fel!";
+    }
+
+
+
 
 #endif // TESZT
 

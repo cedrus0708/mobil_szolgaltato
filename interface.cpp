@@ -9,7 +9,10 @@
 #include <iostream>
 #include <fstream>
 
+#include <stdexcept>
+
 using std::endl;
+using std::runtime_error;
 
 
 string Interface::read_input(const string& input_name, const string& input_start_text){
@@ -98,9 +101,8 @@ void Interface::uj_ugyfel(){
     // létezik-e már az ügyfél
     Ugyfel* ugyfel = get_ugyfel(telefonszam);
     if(ugyfel != nullptr) {
-        os << "Ugyfel letrehozasa SIKERTELEN!\n\tMar letezik ugyfel a megadott telefonszammal." << endl;
         delete csomag;
-        return;
+        throw runtime_error("Ugyfel letrehozasa SIKERTELEN!\n\tMar letezik ugyfel a megadott telefonszammal.");
     }
 
     //ugyfelek.push_back(new Ugyfel( static_cast<int>(telefonszam), nev, cim, new AlapCsomag("alap") ));
@@ -119,13 +121,13 @@ void Interface::ugyfel_torlese(){
     if( is_valid_ugyfel_index(ugyfel_index) ){
         Ugyfel* ugyfel = ugyfelek[ugyfel_index];
         if( ugyfel->getNev() == nev && ugyfel->getCim() == cim ){
-            os << "Ugyfel torlese sikeres!" << endl;
             delete ugyfelek.pop(ugyfel_index);
+            os << "Ugyfel torlese sikeres!" << endl;
             return;
         }
     }
 
-    os << "Ugyfel nem talalhato!" << endl;
+    throw runtime_error("Ugyfel nem talalhato!");
 
 }
 
@@ -145,9 +147,10 @@ void Interface::ugyfelek_fajlba(){
     os << "Ugyfelek fajlba irasa." << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ofstream file(file_name.c_str());
-    // hiba kezeles file.is_open()
-    int ugyfelek_szama = ugyfelek.size();
 
+    if(file.fail()) throw runtime_error("A fajl megnyitasa sikertelen!");
+
+    int ugyfelek_szama = ugyfelek.size();
     file << ugyfelek_szama << endl;
     for(int i = 0; i < ugyfelek_szama; ++i){
         ugyfelek[i]->kiir(file); file << endl;
@@ -159,8 +162,8 @@ void Interface::ugyfelek_fajlbol(){
     os << "Ugyfelek fajbol olvasasa. A regi adatok felul irasra kerulnek!" << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ifstream file(file_name.c_str());
-    if(!file.is_open()) { // THROW
-       os << "A megadott fajl nem talalhato! (" << file_name << ")" << endl; return;
+    if(!file.is_open()) {
+        throw runtime_error(string("A megadott fajl nem talalhato! (" + file_name + ")").c_str());
     }
 
     delete_ugyfelek();
@@ -178,14 +181,14 @@ string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os)
 
     int ugyfelek_szama_fajl; source_file >> ugyfelek_szama_fajl;
     if(ugyfelek_szama != ugyfelek_szama_fajl){ // THROW
-        return "A fajl tartalma nem megfelelo. (elter az ugyfelek szama)";
+        throw runtime_error("A fajl tartalma nem megfelelo. (elter az ugyfelek szama)");
     }
 
     for(int i = 0; i < ugyfelek_szama; ++i){
         int telefonszam, percek, sms; source_file >> telefonszam >> percek >> sms;
         Ugyfel* ugyfel = get_ugyfel(telefonszam); // throw
         if(!ugyfel) {
-            return "A fajlban ismeretlen ugyfel telefonszama van!";
+            throw runtime_error("A fajlban ismeretlen ugyfel telefonszama van!");
         }
         os << ugyfel->getNev() << ": " << ugyfel->szamlaz(percek, sms) << "Ft" << endl; // throw
     }
@@ -203,7 +206,7 @@ void Interface::szamlazas(){
     string source_file_name = get_string_input("fajlnev") + ".txt";
     std::ifstream source_file(source_file_name.c_str());
     if(!source_file.is_open()) { // THROW
-       os << "A megadott fajl nem talalhato! (" << source_file_name << ")" << endl; return;
+       throw runtime_error(string("A megadott fajl nem talalhato! (" + source_file_name + ")").c_str());
     }
 
     string result;
@@ -212,10 +215,10 @@ void Interface::szamlazas(){
     if( !target_file_name.isEmpty() ){
         target_file_name = target_file_name + ".txt";
         if(source_file_name == target_file_name){
-            os << "Nem lehet a forras es a cel falj azonos!" << endl; return;
+            throw runtime_error("Nem lehet a forras es a cel falj azonos!");
         }
         std::ofstream target_file(target_file_name.c_str());
-        // megnyilt a faljl? // THROW
+        if(target_file.fail()) throw runtime_error("A faljt nem sikerült megnyitni!");
 
         result = szamlazas_szamol( source_file, target_file );
         os << "Az eredmenyek a " << source_file_name << " allomanyban talalhato." << endl;
@@ -262,17 +265,21 @@ void Interface::run(){ // main_menu
 }
 
 void Interface::valasztas_kezelo(const string& valasztas){
-    // try {
-    if     (valasztas == "0") kilep();                  // 0. kilep
-    else if(valasztas == "1") uj_ugyfel();              // 1. ugyfel felvetele
-    else if(valasztas == "2") ugyfelek_listazasa();     // 2. ugyfelek listazasa
-    else if(valasztas == "3") ugyfel_torlese();         // 3. ugyfelek torlese
-    else if(valasztas == "4") ugyfelek_fajlba();        // 4. ugyfelek fajlba irasa
-    else if(valasztas == "5") ugyfelek_fajlbol();       // 5. ugyfelek fajlbol ovasasa
-    else if(valasztas == "6") szamlazas();              // 6. szamlazas
-    else if(valasztas == "7") sms_teszt_toggle();       // 7. CSOAMAGOK SZERKESZTÉSE
-                                                            // AHOL MINDEN CSOMAGNAK LEHET ÁLLÍTANI AZ ÉRTÉKÉT
-    else os << "Nincs ilyen menupont!";
+    try {
+        if     (valasztas == "0") kilep();                  // 0. kilep
+        else if(valasztas == "1") uj_ugyfel();              // 1. ugyfel felvetele
+        else if(valasztas == "2") ugyfelek_listazasa();     // 2. ugyfelek listazasa
+        else if(valasztas == "3") ugyfel_torlese();         // 3. ugyfelek torlese
+        else if(valasztas == "4") ugyfelek_fajlba();        // 4. ugyfelek fajlba irasa
+        else if(valasztas == "5") ugyfelek_fajlbol();       // 5. ugyfelek fajlbol ovasasa
+        else if(valasztas == "6") szamlazas();              // 6. szamlazas
+        else if(valasztas == "7") sms_teszt_toggle();       // 7. CSOAMAGOK SZERKESZTÉSE
+                                                                // AHOL MINDEN CSOMAGNAK LEHET ÁLLÍTANI AZ ÉRTÉKÉT
+        else os << "Nincs ilyen menupont!";
+    }
+    catch( const runtime_error& e ){
+        os << "Hiba tortent:" << endl << e.what() << endl;
+    }
 }
 
 void Interface::delete_ugyfelek(){
