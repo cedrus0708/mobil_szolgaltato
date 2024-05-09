@@ -13,8 +13,10 @@ void run_tests(){
     // string
     TEST(String, sanity) {
         string s;
-        EXPECT_EQ((size_t)0, s.size()) << "Nem ures?" << std::endl;
-        // ...
+        EXPECT_EQ((size_t)0, s.size()) << "Konstruktor ures string" << std::endl;
+
+
+
     } ENDM
     //...
 

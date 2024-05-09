@@ -15,14 +15,14 @@ template<typename T>
 class vector {
 private:
 
+    int res;            ///< lefoglalt terület
+
     unsigned int len;   ///< adatok száma
     T* pData;           ///< pointer az adatokra
 
-    //int res;          ///< lefoglalt terület
-
 public:
     /// Default Konstruktor
-    inline vector() : len(0), pData(new T[0]) {};
+    inline vector() : :res(0), len(0), pData(new T[0]) {};
 
     /// Konstruktor, már elõre foglal helyet.
     /// @param reservation - mennyi helyet foglaljon
@@ -51,6 +51,10 @@ public:
     /// További helyet lehet foglani a vektorban.
     /// @param reservation - amennyi helyet szeretnénk pluszba
     void reserve(int reservation);
+
+    /// Autómatikusan átmérezeti úgy a tömböt, hogy a feleselegesen foglalt helyeket elhagyja.
+    /// A reserve függvény "párja".
+    void resize();
 
     /// A vektor végéhez fûz.
     /// @param new_element - a vektor végéhez fûzendõ elem
