@@ -7,8 +7,8 @@ todo-notes:
 	OK:szamlazas eredmenyenek fajlbairasa
 	cpp függvenyek sorba rendezni
 	OK:globalis valtozo
-	minden csomag erteke allithato lehetne
-	fo valasztasnal konvertalja szamma
+	X:minden csomag erteke allithato lehetne
+	X:fo valasztasnal konvertalja szamma
 	OK:string +=
 	hibakereles unblock
 	hibakezeles fajtai

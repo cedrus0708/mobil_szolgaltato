@@ -6,7 +6,7 @@
 /// A TESZT makróval lehet állítani, hogy a program teszteljen, vagy normálisan fusson.
 /// TESZT = 0 -> nem tesztel
 /// TESZT > 0 -> tesztel
-#define TESZT 0
+#define TESZT 1
 
 #if TESZT
 #include "tester.h"
@@ -31,10 +31,8 @@ int main()
         std::cout << "Vegzetes hiba lepett fel a program futasa soran" << std::endl << error.what();
     }
     catch(...){
-        std::cout << "Kezeletlen hiba lepett fel!";
+        std::cout << "Vegzetes ismeretlen hiba lepett fel!";
     }
-
-
 
 
 #endif // TESZT

@@ -165,6 +165,7 @@ string& string::remove_all(char c) {
     size_t new_pData_index = 0;
     for (size_t i = 0; i < length; ++i)
         if( pData[i] != c ) new_pData[new_pData_index++] = pData[i];
+    new_pData[new_pData_index] = '\0';
     delete[] pData;
     pData = new_pData;
     length = new_length;

@@ -30,7 +30,7 @@ public:
 
     /// Konstruktor egy nullával lezárt char sorozatból
     /// @param p - pointer egy C sztringre
-    ///        null pointer esetén const char* típusu kivételt dob
+    ///        null pointer esetén std::invalid_argument típusu kivételt dob
     string(const char* p = "");
 
     /// Konstruktor egy számból
@@ -81,13 +81,13 @@ public:
     /// A string egy megadott indexű elemének referenciájával tér vissza.
     /// @param idx - karakter indexe
     /// @return karakter (referencia)
-    ///         Indexelési hiba esetén const char* kivételt dob.
+    ///         Indexelési hiba esetén std::out_of_range kivételt dob.
     char& operator[](unsigned int idx);
 
     /// A string egy megadott indexű elemének referenciájával tér vissza.
     /// @param idx - karakter indexe
     /// @return karakter (referencia)
-    ///         Indexelési hiba esetén const char* kivételt dob.
+    ///         Indexelési hiba esetén std::out_of_range kivételt dob.
     const char& operator[](unsigned int idx) const;
 
     /// Két string összehasonlítása.
@@ -127,14 +127,12 @@ public:
     /// Elhagyja a strnig elejét az index alapján.
     /// @param start - az uj string eleje (ezt már tartalmazza az uj string)
     /// @return az ujjonan létrejövő string
-    ///         Indexelési hiba esetén const char* kivételt dob.
     string& erase(size_t start);
 
     /// Elhagyja a string elejét és a végét az indexek alapján.
     /// @param start - az uj string errol az indexrol indul (tartalmazza az uj)
     /// @param stop - ettől az indextől már nem tartalmaz semmit (ezt már nem tartalmazza az uj)
     /// @return az így létrejött új string: [start, stop)
-    ///         Indexelési hiba esetén const char* kivételt dob.
     string& erase(size_t start, size_t stop);
 
     /// Levága a string eléről és a végéről a white-space-ket.
