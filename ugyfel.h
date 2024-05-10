@@ -20,12 +20,13 @@ class Ugyfel {
 
     Csomag* csomag;     ///< az ügyfél által igénybe vett csomag
 
+    /// Copy Konstruktor.
+    /// Privát, hogy ne lehessen ügyfeleket lemásolni.
+    inline Ugyfel( const Ugyfel& u ) : telefonszam(0), csomag(nullptr){};
+
 public:
     /// (Default) Konstruktor
-    Ugyfel( const int telefonszam = 0, const string& nev = "", const string& cim = "", Csomag* csomag = nullptr) : telefonszam(telefonszam), nev(nev), cim(cim), csomag(csomag) {};
-
-    /// Copy Konstruktor
-    Ugyfel( const Ugyfel& u );
+    inline Ugyfel( const int telefonszam = 0, const string& nev = "", const string& cim = "", Csomag* csomag = nullptr) : telefonszam(telefonszam), nev(nev), cim(cim), csomag(csomag) {};
 
     /// Desktuktor
     ~Ugyfel(){

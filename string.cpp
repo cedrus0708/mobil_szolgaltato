@@ -204,6 +204,8 @@ std::istream& operator>>(std::istream& is, string& s){
         else break;
     }
 
+    is.clear();
+
     return is;
 
 }

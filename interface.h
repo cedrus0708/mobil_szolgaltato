@@ -17,16 +17,14 @@
 using std::endl;
 
 class Interface{
-private:
+protected:
 
     std::ostream& os;           ///< ide írja a kimenetét
     std::istream& is;           ///< innen olvasssa a bemenetét
 
     bool interfacing;           ///< fut-e az interface
 
-    vector<Ugyfel*> ugyfelek;   ///< nyilvántartott ügyfelekű
-
-    // csomagokbol allo heterogen kollekcio???
+    vector<Ugyfel*> ugyfelek;   ///< nyilvántartott ügyfelek
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -35,7 +33,7 @@ private:
     string read_input(const string& input_name, const string& input_start_text = "");
     /// Olvas a bemenetrõl biztonságosan, és körülvágva az ígért típust adja.
     string get_string_input(const string& input_name, const string& input_start_text = "", const size_t min_length = 1, const size_t max_length = -1 );
-    int get_number_input(const string& input_name, const string& input_start_text = "", const size_t min_length = 1, const size_t max_length = -1);
+    int get_number_input(const string& input_name, const string& input_start_text = "", const size_t min_length = 1, const size_t max_length = std::numeric_limits<size_t>::infinity(),  const int min_value = std::numeric_limits<int>::min(), const int max_value = std::numeric_limits<int>::max() );
     Csomag* get_csomag_input(); /// A csomagot lefoglalja. A felszabadítás a hívó feladata!
 
     /// Ügyfelek vektor kiürítése
@@ -59,7 +57,7 @@ private:
     void ugyfelek_fajlba();     // 4.
     void ugyfelek_fajlbol();    // 5.
     void szamlazas();           // 6.
-    void sms_teszt_toggle();
+    void sms_teszt_toggle();    // 7.
 
     /// Segédfüggvények a menüpontokhoz
     string szamlazas_szamol(std::ifstream& source_file, std::ostream& os);

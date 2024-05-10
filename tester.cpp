@@ -9,6 +9,9 @@
 #include "ugyfel.h"
 #include "interface.h"
 
+const char* interface_menu_text_static = "\nValassz az alabbi lehetosegek kozul!\n0. Kiepes a programbol\n1. Ugyfel felvetele\n2. Ugyfelek listazasa\n3. Ugyfel torlese\n4. Ugyfelek fajlba irasa\n5. Ugyfelek betoltese fajlbol\n6. Szamlazas\n7. SMSMax sms: ";
+
+
 void run_tests(){
     GTINIT(std::cin);       // Csak C(J)PORTA mûködéséhez kell
 
@@ -158,6 +161,9 @@ void run_tests(){
         string s8 = "000";
         EXPECT_EQ(0, stoi(s8));
 
+        string s9 = " 30 4\t0";
+        EXPECT_EQ(3040, stoi(s9));
+
 
     } ENDM
 
@@ -261,7 +267,103 @@ void run_tests(){
 
     } ENDM
 
-   /*
+
+    // csomag
+    TEST(Csomag, funkcionalitas) {
+        AlapCsomag alap;
+        MobiNet mobi;
+        SMSMax sms;
+
+        EXPECT_STREQ("AlapCsomag", alap.getNev().c_str());
+        EXPECT_STREQ("MobiNet", mobi.getNev().c_str());
+        EXPECT_STREQ("SMSMax", sms.getNev().c_str());
+
+        EXPECT_DOUBLE_EQ(500.0, alap.szamit(10,10));
+        EXPECT_DOUBLE_EQ(50.0, mobi.szamit(10,10));
+        EXPECT_DOUBLE_EQ(170.0, sms.szamit(10,10));
+
+        EXPECT_FALSE(sms.getIngyenesSms());
+        sms.toggle_sms_ingyenesseg();
+        EXPECT_TRUE(sms.getIngyenesSms());
+        EXPECT_DOUBLE_EQ(70.0, sms.szamit(10,10));
+
+        Csomag* cs = nullptr;
+        std::istringstream alap_input("AlapCsomag");
+        alap_input >> cs;
+        EXPECT_STREQ("AlapCsomag", cs->getNev().c_str());
+        std::istringstream mobi_input("MobiNet");
+        mobi_input >> cs;
+        EXPECT_STREQ("MobiNet", cs->getNev().c_str());
+        std::istringstream sms_input("SMSMax");
+        sms_input >> cs;
+        EXPECT_STREQ("SMSMax", cs->getNev().c_str());
+
+        std::istringstream nem_csomag_nev("nem egy csomag neve");
+        nem_csomag_nev >> cs;
+        EXPECT_TRUE(cs == nullptr);
+
+    } ENDM
+
+
+
+    // ugyfel
+    TEST(Ugyfel, funkcionalitas) {
+        Ugyfel ugyfel;
+        EXPECT_EQ(0, ugyfel.getTel());
+        EXPECT_STREQ("", ugyfel.getNev().c_str());
+        EXPECT_STREQ("", ugyfel.getCim().c_str());
+        EXPECT_STREQ("nincs", ugyfel.getCsomagNev().c_str());
+        EXPECT_DOUBLE_EQ(0.0, ugyfel.szamlaz(10, 10));
+
+        std::istringstream istream("301234567\nTeszt Alany\nOtthon utca 13\nMobiNet");
+        istream >> ugyfel;
+
+        EXPECT_EQ(301234567, ugyfel.getTel());
+        EXPECT_STREQ("Teszt Alany", ugyfel.getNev().c_str());
+        EXPECT_STREQ("Otthon utca 13", ugyfel.getCim().c_str());
+        EXPECT_STREQ("MobiNet", ugyfel.getCsomagNev().c_str());
+        EXPECT_DOUBLE_EQ(50.0, ugyfel.szamlaz(10, 10));
+
+        std::ostringstream ostream;
+        ugyfel.kiir(ostream);
+        EXPECT_STREQ("301234567\nTeszt Alany\nOtthon utca 13\nMobiNet", ostream.str().c_str());
+
+    } ENDM
+
+    // interface
+    TEST(Interface, startup) {
+
+        std::ostringstream ostream1;
+        std::istringstream istream1("0"); // egybol kilépjen
+
+        Interface interface1(ostream1, istream1);
+
+        // konstruktor nem ir semmit a kimenetre
+        EXPECT_STREQ("", ostream1.str().c_str());
+
+        interface1.run();
+        // kiirja az opciokat es keri a valasztast, majd kilep
+        EXPECT_STREQ((string(interface_menu_text_static)+string("ingyenes")+string("\n\tValasztas: Kilepes a programbol...\n")).c_str(), ostream1.str().c_str());
+
+    } ENDM
+
+    TEST(Interface, Elso opcio) { // ugyfel letrehozasa
+
+        std::ostringstream ostream1;
+        std::istringstream istream1("1\n30\nTeszt Alany\nOtthon Lakom\n1\n2\n0"); // egybol kilépjen
+
+        Interface interface1(ostream1, istream1);
+
+        // konstruktor nem ir semmit a kimenetre
+        EXPECT_STREQ("", ostream1.str().c_str());
+
+        interface1.run();
+        // kiirja az opciokat es keri a valasztast, majd kilep
+        EXPECT_STREQ((string(interface_menu_text_static)+string("ingyenes")+string("\n\tValasztas: Kilepes a programbol...\n")).c_str(), ostream1.str().c_str());
+
+    } ENDM
+
+/*
     TEST(String, kivetelek) {
 
 
@@ -270,27 +372,8 @@ void run_tests(){
 
 
 
-    // csomag
-    // ...
-
-    // ugyfel
-    // ...
-
-    // interface
-    // ...
-
     GTEND(std::cerr);       // Csak C(J)PORTA mûködéséhez kell
 }
-
-/*void teszt_string(){}
-
-void teszt_vector(){}
-
-void teszt_csomag(){}
-
-void teszt_ugyfel(){}
-
-void teszt_interface(){}*/
 
 
 

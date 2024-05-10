@@ -2,18 +2,37 @@ todo-notes:
 	OK:1 és 3on kuivul üzenet	
 	OK:MÉG NEM MŰKÖDIK NEGAGTÍV SZÁMOKRA a string konstruktor!
 	OK:count digit negativ szamokkal!
-	FILE TARTALMA HIBAS ESETBEN EXEPTION 
-	tesztek
+	OK:FILE TARTALMA HIBAS ESETBEN EXEPTION 
+	OK:nem intreface tesztek
 	OK:szamlazas eredmenyenek fajlbairasa
-	cpp függvenyek sorba rendezni
+	OK:cpp függvenyek sorba rendezni
 	OK:globalis valtozo
 	X:minden csomag erteke allithato lehetne
+		felesleges jelen esetben
 	X:fo valasztasnal konvertalja szamma
+		elmeletileg lehetne olyan opció is, amihez szöveg szükséges
 	OK:string +=
-	hibakereles unblock
-	hibakezeles fajtai
+	OK:hibakereles unblock
+	OK:hibakezeles fajtai
+	szamlazas beolvasas negativ szamok, vagy szöveg
+	interface tesztek
+	dokumentacio
+	specifikacio ellenorzese, hogy minden megvan-e
+	leadás
+
+Fajlbeolvasaskor a progam ugyfelek beolvaasasa eseten feltetelezi, hogy a fajl hibatlan, es
+nem tartalmaz hamis, hibas adatokat.
+Szamlazas eseteben van minimalis ellenorzes a fajl helyesseget illetoen. 
+	(ugyfelek szama, adatok helyessege).
+
+Ugyfelben a default konstruktorban a telefonszámot nullára állítom, ami egy nem valós érték.
+Mert
+Telefonszám csak pozitiv egesz szam lehet!
 
 A programban mindenhol std::exception kivételt használok.
+
+A teszt programban egyes, trükkös helyeken, ahol stringstream-mel kellett tesztelnem, 
+hogy jól beolvassa-e magát az objektum használtam std::string-et közvetetten.
 
 Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
 pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
@@ -22,9 +41,11 @@ pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonsz
 main
 string.h + string.cpp
 vector.h(pp) + vector.cpp - x:iterátor is <- "Generikus Tároló"
+	felesleges az iterátor.
 ugyfel.h + ugyfel.cpp
 csomag.h + csomag.cpp
 x:file.h + file.cpp
+	interface megoldja
 menu.h + menu.cpp
 
 ----
