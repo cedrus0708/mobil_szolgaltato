@@ -14,11 +14,29 @@ todo-notes:
 	OK:string +=
 	OK:hibakereles unblock
 	OK:hibakezeles fajtai
+	vector iterator mindenhol
+	vector másolható és értékadható
 	szamlazas beolvasas negativ szamok, vagy szöveg
 	interface tesztek
 	dokumentacio
 	specifikacio ellenorzese, hogy minden megvan-e
 	leadás
+	delete vector.cpp VAGY vector.hpp atalakit
+	
+
+	ne legyen a mainben egy mindent elkapó catch??
+
+interface improvement:
+	OK:a get string stb.. inputok publikusak
+	tovabb szetvalasztani az alap logikat es arra epiteni az üzleti szövegelést
+
+Az interface osztályban minden tagfüggvény privát volt, kivéve a run(), ami elnitotta (kons, destr) ezért nem tudtam tesztelni. Ezért a tesztelendő függvényeket publikussá tettem.
+Az osztályon belül is igyekeztem a ki és bemeneti szöveget elszeparálni a logikáról (azaz a logikára építeni a szövegelést)
+
+Az interface osztályon belül ami ír vagy olvas a bemenetről, az nem 
+Tettem bele isInterfacing gettert. Ezt én egy single thread esetén nem tudom hasznosan felhasználni, de egy esetleges bővitett verzióban szükséges lehet.
+
+Az interfaceban a számlázás függványem kettő függvénybe szerveztem, de még így is határset a hosszusága. Ezért ezt itt megemlítem, hogy azt nehéz lenne a megnyitott fáljlok miatt tovább törtelni.
 
 Fajlbeolvasaskor a progam ugyfelek beolvaasasa eseten feltetelezi, hogy a fajl hibatlan, es
 nem tartalmaz hamis, hibas adatokat.
@@ -30,6 +48,8 @@ Mert
 Telefonszám csak pozitiv egesz szam lehet!
 
 A programban mindenhol std::exception kivételt használok.
+
+Bár eddig azt mondam, hogy a csomagon belül a szamol függvenyt nem teszem konstansá, mert elméletben válzotzathaná a csomag belső értékeit, mibvel ezt nem tette, azétr constatnsá tettem.
 
 A teszt programban egyes, trükkös helyeken, ahol stringstream-mel kellett tesztelnem, 
 hogy jól beolvassa-e magát az objektum használtam std::string-et közvetetten.

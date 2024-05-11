@@ -30,7 +30,7 @@ public:
     /// @param percek - ennyi percet beszélt
     /// @param sms - küldött sms-ek száma
     /// @return fizetendő összeg
-    virtual double szamit(int percek, int sms) = 0;
+    virtual double szamit(const int percek, const int sms) const = 0;
 
     /// Destruktor
     virtual ~Csomag(){};
@@ -43,7 +43,7 @@ public:
 
     inline string getNev() const { return AlapCsomagNev; };
 
-    double szamit(int percek, int sms);
+    double szamit(const int percek, const int sms) const;
 };
 
 class MobiNet : public Csomag {
@@ -53,7 +53,7 @@ public:
 
     inline string getNev() const { return MobiNetNev; };
 
-    double szamit(int percek, int sms);
+    double szamit(const int percek, const int sms) const;
 };
 
 class SMSMax : public Csomag {
@@ -63,10 +63,10 @@ public:
 
     inline string getNev() const { return SMSMaxNev; };
 
-    inline bool getIngyenesSms(){ return ingyenes_az_sms; };
+    inline bool getIngyenesSms() const { return ingyenes_az_sms; };
     inline void toggle_sms_ingyenesseg() { ingyenes_az_sms = !ingyenes_az_sms; }
 
-    double szamit(int percek, int sms);
+    double szamit(const int percek, const int sms) const;
 };
 
 /// Beolvasás

@@ -27,7 +27,7 @@ public:
 
     /// Konstruktor, már elõre foglal helyet.
     /// @param reservation - mennyi helyet foglaljon
-    vector(size_t reservation);
+    vector(const size_t reservation);
 
     /// Copy Konstruktor
     vector(const vector& v);
@@ -51,7 +51,7 @@ public:
 
     /// További helyet lehet foglani a vektorban.
     /// @param reservation - amennyi helyet szeretnénk pluszba
-    void reserve(size_t reservation);
+    void reserve(const size_t reservation);
 
     /// Autómatikusan átmérezeti úgy a tömböt, hogy a feleselegesen foglalt helyeket elhagyja.
     /// A reserve függvény "párja".
@@ -65,7 +65,7 @@ public:
     /// @param idx - egy érvényes index a vektoron belül
     /// @return a kivett elem
     ///     Érvénytelen index esetén std::out_of_range típusú kivételt dob.
-    T pop(size_t idx);
+    T pop(const size_t idx);
 
     /// Kiüríti a vektort
     void clear();
@@ -75,20 +75,20 @@ public:
     /// @param idx - egy érvényes index a vektorban
     /// @return a vektor indexedik eleme
     ///     Helytelen indexelés esetén std::out_of_range kivételt dob.
-    T& operator[](size_t idx);
+    T& operator[](const size_t idx);
 
     /// Indexelõ operátor
     /// @param idx - egy érvényes index a vektorban
     /// @return a vektor indexedik eleme
     ///     Helytelen indexelés esetén std::out_of_range kivételt dob.
-    T operator[](size_t idx) const;
+    T operator[](const size_t idx) const;
 
 };
 
 
 
 template<typename T>
-vector<T>::vector(size_t reservation) :res(reservation), len(0), pData(new T[reservation]) {}
+vector<T>::vector(const size_t reservation) :res(reservation), len(0), pData(new T[reservation]) {}
 
 template<typename T>
 vector<T>::vector(const vector& v){
@@ -100,7 +100,7 @@ vector<T>::vector(const vector& v){
 }
 
 template<typename T>
-void vector<T>::reserve(size_t reservation){
+void vector<T>::reserve(const size_t reservation){
     res += reservation;
     T* new_pData = new T[res];
     for(size_t i = 0; i < len; ++i)
@@ -133,7 +133,7 @@ void vector<T>::push_back(T new_element){
 }
 
 template<typename T>
-T vector<T>::pop(size_t idx) {
+T vector<T>::pop(const size_t idx) {
     if(idx < 0 || idx >= len) throw std::out_of_range("vector: index error");
     T* new_pData = new T[--len];
     for(unsigned int  i = 0; i < idx; ++i){
@@ -156,13 +156,13 @@ void vector<T>::clear() {
 }
 
 template<typename T>
-T& vector<T>::operator[](size_t idx){
+T& vector<T>::operator[](const size_t idx){
     if(!len || idx >= len) throw std::out_of_range("vector: index error");
     return pData[idx];
 }
 
 template<typename T>
-T vector<T>::operator[](size_t idx) const {
+T vector<T>::operator[](const size_t idx) const {
     if(!len || idx >= len) throw std::out_of_range("vector: index error");
     return pData[idx];
 }

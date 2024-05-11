@@ -15,7 +15,7 @@ using std::endl;
 using std::runtime_error;
 
 
-string Interface::read_input(const string& input_name, const string& input_start_text){
+string Interface::read_input(const string& input_name, const string& input_start_text) const {
     os << '\t' << input_name << ": " << input_start_text;
     string input;
     is >> std::skipws >> input;
@@ -23,7 +23,7 @@ string Interface::read_input(const string& input_name, const string& input_start
 };
 
 
-string Interface::get_string_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length){
+string Interface::get_string_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length) const {
     string text = read_input(input_name, input_start_text).trim();
     while(text.size() < min_length || text.size() > max_length ) {
         os << "\t\tNem megfelelo bemenet.";
@@ -34,7 +34,7 @@ string Interface::get_string_input(const string& input_name, const string& input
     return text;
 }
 
-int Interface::get_number_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length, const int min_value, const int max_value ){
+int Interface::get_number_input(const string& input_name, const string& input_start_text, const size_t min_length, const size_t max_length, const int min_value, const int max_value ) const {
     int number = stoi(read_input(input_name, input_start_text));
     size_t number_length = countDigits(number);
     while(number_length > max_length || number_length < min_length || number > max_value || number < min_value) {
@@ -49,7 +49,7 @@ int Interface::get_number_input(const string& input_name, const string& input_st
     return number;
 }
 
-Csomag* Interface::get_csomag_input(){
+Csomag* Interface::get_csomag_input() const {
     Csomag* csomag;
 
     int csomag_szam = 0;
@@ -81,11 +81,11 @@ void Interface::delete_ugyfelek(){
 
 
 
-bool Interface::is_valid_ugyfel_index(int index){
+bool Interface::is_valid_ugyfel_index(const int index) const {
     return (index >= 0 && index < ugyfelek.size());
 }
 
-size_t Interface::get_ugyfel_index(int telefonszam){
+size_t Interface::get_ugyfel_index(const int telefonszam) const {
     size_t ugyfelek_szama = ugyfelek.size();
     for(size_t i = 0; i < ugyfelek_szama; ++i){
         if(ugyfelek[i]->getTel() == telefonszam)
@@ -94,7 +94,7 @@ size_t Interface::get_ugyfel_index(int telefonszam){
     return ugyfelek_szama;
 }
 
-Ugyfel* Interface::get_ugyfel(int telefonszam){
+Ugyfel* Interface::get_ugyfel(const int telefonszam) const {
     size_t i = get_ugyfel_index(telefonszam);
     if(is_valid_ugyfel_index(i)) return ugyfelek[i];
 
@@ -103,7 +103,7 @@ Ugyfel* Interface::get_ugyfel(int telefonszam){
 
 
 
-void Interface::fomenu(){
+void Interface::fomenu() const {
 
     SMSMax smsmax;
     bool bool_test_free = smsmax.getIngyenesSms();
@@ -119,8 +119,9 @@ void Interface::fomenu(){
         << "7. SMSMax sms: " << (bool_test_free ? "ingyenes" : "fizetos") << endl;
 }
 
-void Interface::valasztas_kezelo(const string& valasztas){
+void Interface::valasztas_kezelo(const string& valasztas) {
     try {
+
         if     (valasztas == "0") kilep();                  // 0. kilep
         else if(valasztas == "1") uj_ugyfel();              // 1. ugyfel felvetele
         else if(valasztas == "2") ugyfelek_listazasa();     // 2. ugyfelek listazasa
@@ -128,9 +129,9 @@ void Interface::valasztas_kezelo(const string& valasztas){
         else if(valasztas == "4") ugyfelek_fajlba();        // 4. ugyfelek fajlba irasa
         else if(valasztas == "5") ugyfelek_fajlbol();       // 5. ugyfelek fajlbol ovasasa
         else if(valasztas == "6") szamlazas();              // 6. szamlazas
-        else if(valasztas == "7") sms_teszt_toggle();       // 7. CSOAMAGOK SZERKESZTÉSE
-                                                                // AHOL MINDEN CSOMAGNAK LEHET ÁLLÍTANI AZ ÉRTÉKÉT
+        else if(valasztas == "7") sms_teszt_toggle();       // 7. smsmax csomag állítása
         else os << "Nincs ilyen menupont!";
+
     }
     catch( const runtime_error& e ){
         os << "Hiba tortent:" << endl << e.what() << endl;
@@ -165,7 +166,7 @@ void Interface::uj_ugyfel(){
     os << "Ugyfel sikeresen letrehozva." << endl;
 }
 
-void Interface::ugyfelek_listazasa(){
+void Interface::ugyfelek_listazasa() const {
     int ugyfelek_szama = ugyfelek.size();
     if(ugyfelek.isEmpty()) { os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
     os << "Ugyfelek a rendszerben:" << endl;
@@ -198,7 +199,7 @@ void Interface::ugyfel_torlese(){
 
 }
 
-void Interface::ugyfelek_fajlba(){
+void Interface::ugyfelek_fajlba() const {
     os << "Ugyfelek fajlba irasa." << endl;
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ofstream file(file_name.c_str());
@@ -231,7 +232,7 @@ void Interface::ugyfelek_fajlbol(){
     }
 }
 
-string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os){
+string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os) const {
     int ugyfelek_szama = ugyfelek.size();
 
     int ugyfelek_szama_fajl; source_file >> ugyfelek_szama_fajl;
@@ -253,7 +254,7 @@ string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os)
 
 }
 
-void Interface::szamlazas(){
+void Interface::szamlazas() const {
     os << "Szamlazas." << endl;
 
     if(!ugyfelek.size()){ os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
@@ -285,7 +286,7 @@ void Interface::szamlazas(){
     os << result << endl;
 }
 
-void Interface::sms_teszt_toggle(){
+void Interface::sms_teszt_toggle() const {
 
     os << "\tAtallitva!" << endl;
 

@@ -17,11 +17,11 @@
 bool SMSMax::ingyenes_az_sms = false;
 
 
-double AlapCsomag::szamit(int percek, int sms){
+double AlapCsomag::szamit(const int percek, const int sms) const {
     return percek * perc_dij + sms * sms_dij;
 }
 
-double MobiNet::szamit(int percek, int sms){
+double MobiNet::szamit(const int percek, const int sms) const {
     double ertek = 0;
     ertek += percek * perc_dij;
     if(sms > ingyenes_sms)
@@ -29,7 +29,7 @@ double MobiNet::szamit(int percek, int sms){
     return ertek;
 }
 
-double SMSMax::szamit(int percek, int sms){
+double SMSMax::szamit(const int percek, const int sms) const {
     double ertek = percek * perc_dij;
     if(!ingyenes_az_sms)
         ertek += sms * sms_dij;

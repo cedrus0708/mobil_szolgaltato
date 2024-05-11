@@ -54,7 +54,7 @@ public:
     /// @param sms - ennyi sms-t küldött
     /// @return a fizetendõ összeg
     ///     Ha nincs megadva csomag az ügyfélhez, és számlázni szeretnénk, akkor egyszerûen 0-t ad vissza.
-    double szamlaz(int perc, int sms) const;
+    double szamlaz(const int perc, const int sms) const;
 
     /// Kiírja az adatokat
     /// @param os - ostream - ide írja ki az adatait

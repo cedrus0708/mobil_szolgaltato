@@ -12,7 +12,7 @@ string Ugyfel::getCsomagNev() const {
     return "nincs";
 }
 
-double Ugyfel::szamlaz(int perc, int sms) const {
+double Ugyfel::szamlaz(const int perc, const int sms) const {
     if(csomag == nullptr) return 0;
     return csomag->szamit(perc, sms);
 }

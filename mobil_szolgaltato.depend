@@ -90,16 +90,16 @@
 	"memtrace.h"
 	<exception>
 
-1714748578 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.cpp
+1715449430 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.cpp
 	"csomag.h"
 	"memtrace.h"
 
-1714748578 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.h
+1715449439 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\csomag.h
 	<iostream>
 	"string.h"
 	"memtrace.h"
 
-1714751191 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.h
+1715368815 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.h
 	<iostream>
 	"memtrace.h"
 
@@ -130,7 +130,7 @@
 
 1713594402 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\file.h
 
-1714827886 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\main.cpp
+1715368815 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\main.cpp
 	<iostream>
 	<exception>
 	"memtrace.h"
@@ -142,14 +142,15 @@
 	"ugyfel.h"
 	"vector.hpp"
 
-1714748578 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.h
+1715449613 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.h
 	"string.h"
 	"csomag.h"
 	"memtrace.h"
 
-1714748578 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\vector.hpp
+1715449697 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\vector.hpp
 	<iostream>
 	"memtrace.h"
+	<exception>
 
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\memtrace.cpp
 	<stdio.h>
@@ -162,14 +163,14 @@
 1713594402 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\menu.cpp
 	"menu.h"
 
-1714828183 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.cpp
+1715368815 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\string.cpp
 	"string.h"
 	"memtrace.h"
 	<iostream>
 	<cstring>
 	<exception>
 
-1714748578 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.cpp
+1715368815 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\ugyfel.cpp
 	"ugyfel.h"
 	"memtrace.h"
 
@@ -219,14 +220,14 @@
 	"ugyfel.h"
 	"interface.h"
 
-1714828352 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\interface.cpp
+1715449517 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\interface.cpp
 	"interface.h"
 	"memtrace.h"
 	<iostream>
 	<fstream>
 	<stdexcept>
 
-1714748578 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\interface.h
+1715449486 c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\interface.h
 	<iostream>
 	<fstream>
 	"ugyfel.h"
@@ -248,7 +249,8 @@
 	<fstream>
 	"memtrace.h"
 
-1714748578 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\tester.cpp
+1715368815 source:c:\users\cedru\documents\0egyetem\0prog\hazi\mobil_szolgaltato\tester.cpp
+	<exception>
 	"tester.h"
 	"memtrace.h"
 	"string.h"
