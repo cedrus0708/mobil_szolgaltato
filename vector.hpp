@@ -71,6 +71,12 @@ public:
     void clear();
 
 
+    /// Értékadó operátor
+
+
+
+    vector<T>& operator=(const vector<T>& rhs_s);
+
     /// Indexelõ operátor
     /// @param idx - egy érvényes index a vektorban
     /// @return a vektor indexedik eleme
@@ -153,6 +159,17 @@ void vector<T>::clear() {
     len = 0;
     delete[] pData;
     pData = new T[len];
+}
+
+template<typename T>
+vector<T>& vector<T>::operator=(const vector<T>& rhs_s){
+    delete[] pData;
+    res = rhs_s.res;
+    len = rhs_s.len;
+    pData = new T[res];
+    for(size_t i = 0; i < len; ++i)
+        pData[i] = rhs_s.pData[i];
+    return *this;
 }
 
 template<typename T>

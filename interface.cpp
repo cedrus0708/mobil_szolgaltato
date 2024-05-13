@@ -13,7 +13,7 @@
 
 using std::endl;
 using std::runtime_error;
-
+using std::invalid_argument;
 
 string Interface::read_input(const string& input_name, const string& input_start_text) const {
     os << '\t' << input_name << ": " << input_start_text;
@@ -94,7 +94,7 @@ size_t Interface::get_ugyfel_index(const int telefonszam) const {
     return ugyfelek_szama;
 }
 
-Ugyfel* Interface::get_ugyfel(const int telefonszam) const {
+const Ugyfel* const Interface::get_ugyfel(const int telefonszam) const {
     size_t i = get_ugyfel_index(telefonszam);
     if(is_valid_ugyfel_index(i)) return ugyfelek[i];
 
@@ -155,7 +155,7 @@ void Interface::uj_ugyfel(){
     Csomag* csomag = get_csomag_input();
 
     // létezik-e már az ügyfél
-    Ugyfel* ugyfel = get_ugyfel(telefonszam);
+    const Ugyfel* const ugyfel = get_ugyfel(telefonszam);
     if(ugyfel != nullptr) {
         delete csomag;
         throw runtime_error("Ugyfel letrehozasa SIKERTELEN!\n\tMar letezik ugyfel a megadott telefonszammal.");
@@ -167,9 +167,9 @@ void Interface::uj_ugyfel(){
 }
 
 void Interface::ugyfelek_listazasa() const {
-    int ugyfelek_szama = ugyfelek.size();
     if(ugyfelek.isEmpty()) { os << "Nincsenek ugyfelek a rendszerben!" << endl; return; }
     os << "Ugyfelek a rendszerben:" << endl;
+    int ugyfelek_szama = ugyfelek.size();
     for(int i = 0; i < ugyfelek_szama; ++i){
         os << i+1 << ".\ttelefonszam: +36" << ugyfelek[i]->getTel() << endl
             << "\tnev: " << ugyfelek[i]->getNev() << endl
@@ -185,6 +185,10 @@ void Interface::ugyfel_torlese(){
     string nev = get_string_input("nev");
     string cim = get_string_input("cim");
 
+    delete_ugyfel(telefonszam, nev, cim);
+}
+
+void Interface::delete_ugyfel(const int telefonszam, const string& nev, const string& cim){
     size_t ugyfel_index = get_ugyfel_index(telefonszam);
     if( is_valid_ugyfel_index(ugyfel_index) ){
         Ugyfel* ugyfel = ugyfelek[ugyfel_index];
@@ -194,10 +198,9 @@ void Interface::ugyfel_torlese(){
             return;
         }
     }
-
-    throw runtime_error("Ugyfel nem talalhato!");
-
+    throw invalid_argument("Ugyfel nem talalhato!");
 }
+
 
 void Interface::ugyfelek_fajlba() const {
     os << "Ugyfelek fajlba irasa." << endl;
@@ -219,7 +222,7 @@ void Interface::ugyfelek_fajlbol(){
     string file_name = get_string_input("fajlnev") + ".txt";
     std::ifstream file(file_name.c_str());
     if(!file.is_open()) {
-        throw runtime_error(string("A megadott fajl nem talalhato! (" + file_name + ")").c_str());
+        throw invalid_argument(string("A megadott fajl nem talalhato! (" + file_name + ")").c_str());
     }
 
     delete_ugyfelek();
@@ -232,26 +235,23 @@ void Interface::ugyfelek_fajlbol(){
     }
 }
 
-string Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& os) const {
+void Interface::szamlazas_szamol(std::ifstream& source_file, std::ostream& destination_stream) const {
     int ugyfelek_szama = ugyfelek.size();
 
     int ugyfelek_szama_fajl; source_file >> ugyfelek_szama_fajl;
-    if(ugyfelek_szama != ugyfelek_szama_fajl){ // THROW
+    if(ugyfelek_szama != ugyfelek_szama_fajl){
         throw runtime_error("A fajl tartalma nem megfelelo. (elter az ugyfelek szama)");
     }
 
     for(int i = 0; i < ugyfelek_szama; ++i){
         int telefonszam = 0, percek = 0, sms = 0; source_file >> telefonszam >> percek >> sms;
         if(telefonszam == 0) throw runtime_error("Hibas a fajl tartalma!");
-        Ugyfel* ugyfel = get_ugyfel(telefonszam); // throw
+        const Ugyfel* const ugyfel = get_ugyfel(telefonszam);
         if(!ugyfel) {
             throw runtime_error("A fajlban ismeretlen ugyfel telefonszama van!");
         }
-        os << ugyfel->getNev() << ": " << ugyfel->szamlaz(percek, sms) << "Ft" << endl; // throw
+        destination_stream << ugyfel->getNev() << ": " << ugyfel->szamlaz(percek, sms) << "Ft" << endl;
     }
-
-    return "A szamazas sikeresen veget ert.";
-
 }
 
 void Interface::szamlazas() const {
@@ -266,7 +266,6 @@ void Interface::szamlazas() const {
        throw runtime_error(string("A megadott fajl nem talalhato! (" + source_file_name + ")").c_str());
     }
 
-    string result;
     os << "Add meg, hova irja a rendszer a szamlazas eredmenyet! (opcionalis)" << endl;
     string target_file_name = get_string_input("fajlnev", "", 0);
     if( !target_file_name.isEmpty() ){
@@ -277,13 +276,13 @@ void Interface::szamlazas() const {
         std::ofstream target_file(target_file_name.c_str());
         if(target_file.fail()) throw runtime_error("A faljt nem sikerült megnyitni!");
 
-        result = szamlazas_szamol( source_file, target_file );
+        szamlazas_szamol( source_file, target_file );
         os << "Az eredmenyek a " << source_file_name << " allomanyban talalhato." << endl;
     } else {
-        result = szamlazas_szamol( source_file, os );
+        szamlazas_szamol( source_file, os );
     }
 
-    os << result << endl;
+    os << "A szamazas sikeresen veget ert." << endl;
 }
 
 void Interface::sms_teszt_toggle() const {
@@ -292,7 +291,6 @@ void Interface::sms_teszt_toggle() const {
 
     SMSMax smsmax;
     smsmax.toggle_sms_ingyenesseg();
-
 }
 
 
@@ -304,6 +302,9 @@ Interface::~Interface(){
 
 
 void Interface::run(){
+
+    interfacing = true;
+
     while(interfacing){
         fomenu();
 

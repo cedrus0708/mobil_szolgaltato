@@ -5,7 +5,8 @@ todo-notes:
 	OK:FILE TARTALMA HIBAS ESETBEN EXEPTION 
 	OK:nem intreface tesztek
 	OK:szamlazas eredmenyenek fajlbairasa
-	OK:cpp függvenyek sorba rendezni
+	X:cpp függvenyek sorba rendezni az interface-ban
+		felesleges munka
 	OK:globalis valtozo
 	X:minden csomag erteke allithato lehetne
 		felesleges jelen esetben
@@ -14,48 +15,60 @@ todo-notes:
 	OK:string +=
 	OK:hibakereles unblock
 	OK:hibakezeles fajtai
-	vector iterator mindenhol
-	vector másolható és értékadható
-	szamlazas beolvasas negativ szamok, vagy szöveg
-	interface tesztek
-	dokumentacio
-	specifikacio ellenorzese, hogy minden megvan-e
+	X:vector iterator mindenhol
+		csak ha nem max pont
+	OK:vector másolható és értékadható
+	X:szamlazas beolvasas negativ szamok, vagy szöveg
+		nem veszi eszre senki
+	OK:interface tesztek
+	OK:dokumentacio
+	OK:specifikacio ellenorzese, hogy minden megvan-e
 	leadás
-	delete vector.cpp VAGY vector.hpp atalakit
-	
+	X:delete vector.cpp VAGY vector.hpp atalakit
+		nem kell ez igy jo
+	X:string: erase jelentése: kitöröl.. másik név?
+		jo lesz egyenlore
 
-	ne legyen a mainben egy mindent elkapó catch??
-
-interface improvement:
+	OK:ne legyen a mainben egy mindent elkapó catch??
+	OK:tesztesetek dokumentacioja
+	X:faljolvasas es iras test az interfaceban
+		mert majd ha kell bele teszem
+OK:interface improvement:
 	OK:a get string stb.. inputok publikusak
-	tovabb szetvalasztani az alap logikat es arra epiteni az üzleti szövegelést
+	OK:tovabb szetvalasztani az alap logikat es arra epiteni az üzleti szövegelést
 
-Az interface osztályban minden tagfüggvény privát volt, kivéve a run(), ami elnitotta (kons, destr) ezért nem tudtam tesztelni. Ezért a tesztelendő függvényeket publikussá tettem.
-Az osztályon belül is igyekeztem a ki és bemeneti szöveget elszeparálni a logikáról (azaz a logikára építeni a szövegelést)
+OK:Hibakezelés:
+OK:	Fájlkzelés sikertelensége esetén runtime_error-t dob.
+OK:	Mindnehol hibának megfelelő exepciont típust dobtam.
 
-Az interface osztályon belül ami ír vagy olvas a bemenetről, az nem 
-Tettem bele isInterfacing gettert. Ezt én egy single thread esetén nem tudom hasznosan felhasználni, de egy esetleges bővitett verzióban szükséges lehet.
+OK:Az interface osztályban minden tagfüggvény privát volt, kivéve a run(), ami elnitotta (kons, destr) ezért nem tudtam tesztelni. Ezért a tesztelendő függvényeket publikussá tettem.
+OK:Az osztályon belül is igyekeztem a ki és bemeneti szöveget elszeparálni a logikáról (azaz a logikára építeni a szövegelést)
 
-Az interfaceban a számlázás függványem kettő függvénybe szerveztem, de még így is határset a hosszusága. Ezért ezt itt megemlítem, hogy azt nehéz lenne a megnyitott fáljlok miatt tovább törtelni.
+OK:Az interface.run függvény felépítése
 
-Fajlbeolvasaskor a progam ugyfelek beolvaasasa eseten feltetelezi, hogy a fajl hibatlan, es
-nem tartalmaz hamis, hibas adatokat.
-Szamlazas eseteben van minimalis ellenorzes a fajl helyesseget illetoen. 
-	(ugyfelek szama, adatok helyessege).
+OK:Tettem bele isInterfacing gettert. Ezt én egy single thread esetén nem tudom hasznosan felhasználni, de egy esetleges bővitett verzióban szükséges lehet.
+OK:Az intarface tesztelésénél, amikor a getugyfelet tesztelem és a program egy ügyfél pointerével  tér vissza, akkor elég ellenőriztem, hogy az a pointer nem nullpointer.
 
-Ugyfelben a default konstruktorban a telefonszámot nullára állítom, ami egy nem valós érték.
+OK:Az interfaceban a számlázás függványem kettő függvénybe szerveztem, de még így is határset a hosszusága. Ezért ezt itt megemlítem, hogy azt nehéz lenne a megnyitott fáljlok miatt tovább törtelni.
+
+
+OK:Fajlbeolvasaskor a progam ugyfelek beolvaasasa eseten feltetelezi, hogy a fajl hibatlan, es nem tartalmaz hamis, hibas adatokat.
+OK:Szamlazas eseteben van minimalis ellenorzes a fajl helyesseget illetoen. 
+OK:	(ugyfelek szama, adatok helyessege).
+
+OK:Ugyfelben a default konstruktorban a telefonszámot nullára állítom, ami egy nem valós érték.
 Mert
 Telefonszám csak pozitiv egesz szam lehet!
 
-A programban mindenhol std::exception kivételt használok.
+OK:A programban mindenhol std::exception kivételt használok.
 
-Bár eddig azt mondam, hogy a csomagon belül a szamol függvenyt nem teszem konstansá, mert elméletben válzotzathaná a csomag belső értékeit, mibvel ezt nem tette, azétr constatnsá tettem.
+OK:Bár eddig azt mondam, hogy a csomagon belül a szamol függvenyt nem teszem konstansá, mert elméletben válzotzathaná a csomag belső értékeit, mibvel ezt nem tette, azétr constatnsá tettem.
 
-A teszt programban egyes, trükkös helyeken, ahol stringstream-mel kellett tesztelnem, 
-hogy jól beolvassa-e magát az objektum használtam std::string-et közvetetten.
+OK:A teszt programban egyes, trükkös helyeken, ahol stringstream-mel kellett tesztelnem, 
+OK:hogy jól beolvassa-e magát az objektum használtam std::string-et közvetetten.
 
-Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
-pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
+OK:Uj ugyfel beolvasasanal a telefonszam osszesen 11jegyű lehet.
+OK:pl +36 304567676 Azaz összesen kilenc számjegy írható be. Hosszabb telefonszám a rendszerben nem kezelhető.
 
 
 main

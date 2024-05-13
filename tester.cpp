@@ -13,7 +13,7 @@ const char* interface_menu_text_static = "\nValassz az alabbi lehetosegek kozul!
 
 
 void run_tests(){
-    GTINIT(std::cin);       // Csak C(J)PORTA mûködéséhez kell
+    GTINIT(std::cin);       // Csak C(J)PORTA mÃ»kÃ¶dÃ©sÃ©hez kell
 
     // string
     TEST(String, konstruktorok) {
@@ -45,13 +45,7 @@ void run_tests(){
         EXPECT_EQ((size_t)4, s7.size());
         EXPECT_STREQ("alma", s7.c_str());
 
-        try {
-            EXPECT_THROW_THROW(string s8(nullptr), std::invalid_argument&);
-        } catch (std::invalid_argument&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+        EXPECT_THROW(string s8(nullptr), std::invalid_argument&);
 
     } ENDM
 
@@ -85,13 +79,7 @@ void run_tests(){
         const char s_const = s5[0];
         EXPECT_EQ('s', s_const );
 
-        try {
-            EXPECT_THROW_THROW(s5[4], std::out_of_range&);
-        } catch (std::out_of_range&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+        EXPECT_THROW(s5[4], std::out_of_range&);
 
         string s6 = 's' + string("tring");
         EXPECT_STREQ("string", s6.c_str());
@@ -189,13 +177,8 @@ void run_tests(){
     TEST(Vector, operatorok) {
 
         vector<int> v1(10);
-        try {
-            EXPECT_THROW_THROW(v1[0], std::out_of_range&);
-        } catch (std::out_of_range&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+
+        EXPECT_THROW(v1[0], std::out_of_range&);
 
         vector<int> v2 = v1;
         for(int i = 0; i < 10; ++i)
@@ -207,17 +190,21 @@ void run_tests(){
         const int cint = v1[9];
         EXPECT_EQ(9, cint);
 
-        try {
-            EXPECT_THROW_THROW(v1[10], std::out_of_range&);
-        } catch (std::out_of_range&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+        EXPECT_THROW(v1[10], std::out_of_range&);
+
 
         // operator szeru getterek
         EXPECT_TRUE(v2.isEmpty());
         EXPECT_FALSE(v1.isEmpty());
+
+        vector<int> v3;
+        v3 = v1;
+        EXPECT_EQ(10, v3.size());
+        EXPECT_EQ(9, v3[9]);
+
+        v1.clear();
+        EXPECT_EQ(10, v3.size());
+        EXPECT_EQ(9, v3[9]);
 
 
     } ENDM
@@ -241,13 +228,9 @@ void run_tests(){
         EXPECT_EQ(2, ketto);
         EXPECT_EQ(10, v1.size());
         EXPECT_EQ((size_t)11, v1.reserved());
-        try {
-            EXPECT_THROW_THROW(v1.pop(10), std::out_of_range&);
-        } catch (std::out_of_range&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+
+        EXPECT_THROW(v1.pop(10), std::out_of_range&);
+
 
         v1.clear();
         EXPECT_EQ(0, v1.size());
@@ -256,13 +239,9 @@ void run_tests(){
         v1.resize();
         EXPECT_EQ(0, v1.size());
         EXPECT_EQ((size_t)0, v1.reserved());
-        try {
-            EXPECT_THROW_THROW(v1.pop(0), std::out_of_range&);
-        } catch (std::out_of_range&) {
-        #ifdef CPORTA
-            EXPECT_ENVCASEEQ("ORG_ID", p);
-        #endif
-        }
+
+        EXPECT_THROW(v1.pop(0), std::out_of_range&);
+
 
 
     } ENDM
@@ -302,6 +281,7 @@ void run_tests(){
         nem_csomag_nev >> cs;
         EXPECT_TRUE(cs == nullptr);
 
+
     } ENDM
 
 
@@ -334,7 +314,7 @@ void run_tests(){
     TEST(Interface, startup) {
 
         std::ostringstream ostream1;
-        std::istringstream istream1("0"); // egybol kilépjen
+        std::istringstream istream1("0"); // egybol kilÃ©pjen
 
         Interface interface1(ostream1, istream1);
 
@@ -347,32 +327,99 @@ void run_tests(){
 
     } ENDM
 
-    TEST(Interface, Elso opcio) { // ugyfel letrehozasa
 
-        std::ostringstream ostream1;
-        std::istringstream istream1("1\n30\nTeszt Alany\nOtthon Lakom\n1\n2\n0"); // egybol kilépjen
+    TEST(Interface, input_reading) {
 
-        Interface interface1(ostream1, istream1);
+        std::stringstream os;
+        std::stringstream is;
 
-        // konstruktor nem ir semmit a kimenetre
-        EXPECT_STREQ("", ostream1.str().c_str());
+        Interface interface(os, is);
 
-        interface1.run();
-        // kiirja az opciokat es keri a valasztast, majd kilep
-        EXPECT_STREQ((string(interface_menu_text_static)+string("ingyenes")+string("\n\tValasztas: Kilepes a programbol...\n")).c_str(), ostream1.str().c_str());
+        is << "\t teszt string a bemenetrol  ";
+        EXPECT_STREQ("\t teszt string a bemenetrol  ", interface.read_input("szoveg").c_str());
+
+        is << "\t teszt string a bemenetrol  ";
+        EXPECT_STREQ("teszt string a bemenetrol", interface.get_string_input("szoveg").c_str());
+
+        is << "egy tul hosszu string \n de ez mar jo";
+        EXPECT_STREQ("de ez mar jo", interface.get_string_input("szoveg", "", 1, 12).c_str());
+
+        is << " \n ez mar valami";
+        EXPECT_STREQ("ez mar valami", interface.get_string_input("szoveg").c_str());
+
+        is << " 40\t20 ";
+        EXPECT_EQ(4020, interface.get_number_input("szam"));
+
+        is << " 4020 \n -300 \n 2\t00";
+        EXPECT_EQ(200, interface.get_number_input("szam", "", 1, 3));
+
+        is << " 10 \n -300 \n -2 ";
+        EXPECT_EQ(-2, interface.get_number_input("szam", "", 1, 3, -10, 9));
+
+        is << "-1 \n 0 \n 5 \n 1";
+        Csomag* cs1 = interface.get_csomag_input();
+        EXPECT_STREQ("AlapCsomag", cs1->getNev().c_str());
+        delete cs1;
+
+
+        os.flush();
+        is.flush();
+
+
+        string exit = "0";
+
+        string option_1 = "1";
+        string test_user_tel = "3040";
+        string test_user_name = "Teszt Elek";
+        string test_user_cim = "Otthon lakom";
+
+        string test_user2_tel = "3050";
+        string test_user2_name = "Mi a nevem";
+        string test_user2_cim = "Otthon utca 11";
+
+        is << option_1 << std::endl << test_user_tel << std::endl << test_user_name <<  std::endl << test_user_cim << std::endl << option_1 << std::endl
+            << exit << std::endl;
+        interface.run(); os.flush(); is.flush();
+
+        EXPECT_TRUE(interface.is_valid_ugyfel_index(0));
+        EXPECT_FALSE(interface.is_valid_ugyfel_index(1));
+
+        EXPECT_EQ((size_t)0, interface.get_ugyfel_index(3040));
+        EXPECT_EQ((size_t)1, interface.get_ugyfel_index(30));
+
+        //Itt elÃ©g ellenÅ‘rini, hogy a program nem nullpointerrel tÃ©rt-e vissza.
+        EXPECT_TRUE( interface.get_ugyfel(3040) != nullptr );
+        EXPECT_TRUE( interface.get_ugyfel(30) == nullptr );
+
+
+
+        is << option_1 << std::endl << test_user_tel << std::endl << test_user_name <<  std::endl << test_user_cim << std::endl << option_1 << std::endl
+            << option_1 << std::endl << test_user2_tel << std::endl << test_user2_name <<  std::endl << test_user2_cim << std::endl << option_1 << std::endl
+            << exit << std::endl;
+        interface.run(); os.flush(); is.flush();
+
+        EXPECT_TRUE(interface.is_valid_ugyfel_index(1));
+        EXPECT_FALSE(interface.is_valid_ugyfel_index(2));
+
+        EXPECT_THROW(interface.delete_ugyfel(3040, "nem jo nev", "Otthon lakom"), std::invalid_argument&);
+
+        EXPECT_TRUE(interface.is_valid_ugyfel_index(1));
+        EXPECT_FALSE(interface.is_valid_ugyfel_index(2));
+
+        EXPECT_NO_THROW(interface.delete_ugyfel(stoi(test_user_tel), test_user_name, test_user_cim));
+
+        EXPECT_TRUE(interface.is_valid_ugyfel_index(0));
+        EXPECT_FALSE(interface.is_valid_ugyfel_index(1));
+
+        interface.delete_ugyfelek();
+
+        EXPECT_FALSE(interface.is_valid_ugyfel_index(0));
+
 
     } ENDM
 
-/*
-    TEST(String, kivetelek) {
 
-
-    } ENDM
-    */
-
-
-
-    GTEND(std::cerr);       // Csak C(J)PORTA mûködéséhez kell
+    GTEND(std::cerr);       // Csak C(J)PORTA mÃ»kÃ¶dÃ©sÃ©hez kell
 }
 
 

@@ -1,0 +1,81 @@
+20
+720123456
+Juhasz Zoltan
+Kossuth utca 12, Budapest
+AlapCsomag
+778123456
+Kovacsne Farkas Eszter
+Petofi Sandor utca 45, Szeged
+MobiNet
+734123456
+Nagy Gabor
+Ady Endre utca 3, Debrecen
+SMSMax
+722123456
+Tothne Szabo Eva
+Bem ter 8, Pecs
+SMSMax
+785123456
+Varga Istvan
+Rakoczi ut 21, Miskolc
+AlapCsomag
+799123456
+Kissne Torok Katalin
+Deak Ferenc utca 17, Gyor
+SMSMax
+733123456
+Horvath Peter
+Jozsef Attila utca 54, Szekesfehervar
+SMSMax
+723123456
+Molnar Janos
+Dozsa Gyorgy ut 32, Nyiregyhaza
+AlapCsomag
+790123456
+Farkas Gergo
+Fo utca 10, Szombathely
+AlapCsomag
+774123456
+Kovacs Laszlo
+Rakoczi ut 7, Kecskemet
+AlapCsomag
+776123456
+Szabo Tunde
+Karolyi utca 15, Eger
+SMSMax
+792123456
+Nagyne Varga Emese
+Szechenyi ter 4, Veszprem
+AlapCsomag
+721123456
+Kovacs Gabor
+Bajcsy-Zsilinszky ut 29, Siofok
+SMSMax
+782123456
+Balazsne Feher Anna
+Szell Kalman ter 6, Szolnok
+SMSMax
+796123456
+Torok Peter
+Bartok Bela ut 11, Szeghalom
+MobiNet
+723123456
+Jonas Janos
+Piac ter 18, Hajduboszormeny
+MobiNet
+728123456
+Takacsne Kovacs Viktoria
+Hosok tere 25, Kaposvar
+AlapCsomag
+752123456
+Voros Laszlo
+Tancsics Mihaly utca 2, Szekesfehervar
+MobiNet
+707123456
+Kocsis Krisztian
+Kossuth ter 14, Szekszard
+AlapCsomag
+632123456
+Meszarosne Nagy Ildiko
+Arany Janos utca 5, Debrecen
+MobiNet
