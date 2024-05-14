@@ -47,7 +47,6 @@
 		<Unit filename="tester.h" />
 		<Unit filename="ugyfel.cpp" />
 		<Unit filename="ugyfel.h" />
-		<Unit filename="vector.cpp" />
 		<Unit filename="vector.hpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

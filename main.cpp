@@ -6,7 +6,7 @@
 /// A TESZT makróval lehet állítani, hogy a program teszteljen, vagy normálisan fusson.
 /// TESZT = 0 -> nem tesztel
 /// TESZT > 0 -> tesztel
-#define TESZT 0
+#define TESZT 1
 
 #if TESZT
 #include "tester.h"

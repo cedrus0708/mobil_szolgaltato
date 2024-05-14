@@ -7,13 +7,6 @@
 #include "memtrace.h"
 
 
-/*HIBAKEZELÉS HA A FÁJL NEM TUDJA MELYIK CSOMAGOT AKARUNK -> THROW*/
-
-/*std::istream& operator>>(std::istream& is, Csomag& cs){
-    cs.beolvas(is);
-    return is;
-}*/
-
 bool SMSMax::ingyenes_az_sms = false;
 
 
